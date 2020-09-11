@@ -131,8 +131,15 @@ List 는 Syncronized가 아니여서 단일 스레드에서는 유용하지만 �
 상위 클래스의 메소드와 이름, return 값은 동일하지만, 매개변수만 다른 메소드를 만드는 것을 의미한다.     
 다양한 상황에서 메소드가 호출될 수 있도록 한다.    
 
-# CheckedException과 UnCheckedException의 차이를 설명하시오.
-# OOP란 무엇인가요?
+# CheckedException과 UnCheckedException의 차이를 설명하시오.   
+  
+# OOP란 무엇인가요?    
+Object Oriented Programing 의 약자로 객체지향 프로그래밍을 의미합니다.           
+현실세계에 존재하는 개체를 객체로 만들고 이를 조립하여 프로그래밍 하는 기법으로       
+자바에서 처럼 여러 연관된 속성과 메서드를 모아 놓은 클래스를 이용하여 프로그래밍 하는 기법입니다.       
+          
+추상화, 캡슐화, 상속, 다형성을 가집니다.          
+   
 # final / finally / finalize 의 차이를 설명하시오.
 **final class**     
 다른 클래스에서 상속하지 못한다.   
@@ -157,7 +164,10 @@ Object 클래스에 정의되어 있으며 GC 가 발생하는 시점이 불분�
 또한 finalize() 메소드가 오버라이딩 되어 있으면 GC 가 이루어질 때 바로 Garbage Collecting 되지 않는다.          
 GC 가 지연되면서 OOME(Out of Memory Exception)이 발생할 수 있다.          
     
-# new String()과 ""의 차이에 대해 설명해주세요.
+# new String()과 ""의 차이에 대해 설명해주세요.    
+new String()은 힙 메모리 영역에 새로운 인스턴스를 생성하는 것이고       
+""는 기존 메모리에 저장된 ""을 찾아 참조하게 됩니다.           
+       
 # 스프링 IOC가 무엇인가요?
 # OOP와 AOP에 대한 차이를 설명해주세요.
 # POJO가 무엇인가요?
