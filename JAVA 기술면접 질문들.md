@@ -132,7 +132,17 @@ List 는 Syncronized가 아니여서 단일 스레드에서는 유용하지만 �
 다양한 상황에서 메소드가 호출될 수 있도록 한다.    
 
 # CheckedException과 UnCheckedException의 차이를 설명하시오.   
-  
+**CheckedException :**   
+반드시 명시적으로 처리해야 하기 때문에 Checked Exception이라고 하며,     
+try catch를 해서 에러를 잡든 throws를 통해서 호출한 메서드로 예외를 던져야 합니다.       
+예를 들면 : I/O 관련 Exception       
+       
+**UnCheckedException :**    
+명시적인 예외 처리를 강제하지 않는 특징이 있기 때문에 Unchecked Exception이라 하며,    
+catch로 잡거나 throw로 호출한 메서드로 예외를 던지지 않아도 상관이 없습니다.         
+예를 들면 : IllegalArgumentException, NullpointerException   
+   
+   
 # OOP란 무엇인가요?    
 Object Oriented Programing 의 약자로 객체지향 프로그래밍을 의미합니다.           
 현실세계에 존재하는 개체를 객체로 만들고 이를 조립하여 프로그래밍 하는 기법으로       
