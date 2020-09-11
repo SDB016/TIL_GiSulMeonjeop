@@ -1,4 +1,17 @@
 # JVM구조에 대해 설명하시오.
+1. JAVA SOURCE : 사용자가 정의한 자바 파일
+2. COMPILER : 자바를 클래스 파일로 변환 
+3. ByteCode : 클래스 파일들 
+4. ClassLoader : 클래스 파일들을 JVM으로 로드하여 RuntimeDataArea에 배치   
+5. ExecutionEngine : 로딩된 클래스 파일들의 바이트 코드를 해석 
+6. RuntimeDataArea : JVM이라는 프로세스가 프로그램을 수행하기 위하여 OS로부터 받은 메모리 공간   
+
+RuntimeDataArea -> 메모리 구조  
+메서드
+힙
+스택   
+
+
 # GC처리 방법에 대해 설명하시오.
 # HashMap vs HashTable vs ConcurrentHashMap의 차이를 설명하시오.
 # 접근제어자에 대해 설명하시오.
