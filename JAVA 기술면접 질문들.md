@@ -21,10 +21,52 @@
 
 
 # GC처리 방법에 대해 설명하시오.
-# HashMap vs HashTable vs ConcurrentHashMap의 차이를 설명하시오.
-# 접근제어자에 대해 설명하시오.
+* 메모리가 부족할 때 사용되지 않는 메모리 즉, 쓰레기 메모리를 개발자가 해제하는 것이 아니라 JVM에서 해제해주는 것      
+* 메모리 부족 요청시 실행 또는 JVM이 한가할 때 동작한다. -> 다른 말로 그전까지는 할당하고 있음      
+         
+# HashMap vs HashTable vs ConcurrentHashMap의 차이를 설명하시오.     
+**공통점 :** Map 인터페이스를 구현한 콜렉션들입니다. -> key/value 구조          
+**차이점 :**    
+1. HashMap : 주요 메소드에 synchronized 키워드가 없습니다. key, value에 null을 입력할 수 있습니다.     
+2. HashTable : 주요 메소드에 synchronized 키워드가 선언, key, value 에 null을 입력할 수 없습니다.           
+3. ConcurrentHashMap의 : HashMap을 **thread-safe** 하도록 만든 클래스가 ConcurrentHashMap입니다.     
+단, key, value 에 null을 입력할 수 없으며 ```putIfAbsent```라는 메소드 가집니다.       
+        
+**thread-safe**    
+```
+멀티 스레드 프로그래밍에서 일반적으로 어떤 함수나 변수, 
+혹은 객체가 여러 스레드로부터 동시에 접근이 이루어져도 프로그램의 실행에 문제가 없음을 뜻한다.
+```
+    
+# 접근제어자에 대해 설명하시오.        
+**접근 제어자가 사용될 수 있는 곳 :** 클래스, 멤버변수, 메서드, 생성자             
+      
+**private :**         
+같은 클래스 내에서만 접근이 가능합니다.           
+                  
+**protected :**    
+같은 패키지내에서 그리고 해당 클래스를 상속받은 자손클래스에서 접근이 가능          
+       
+**default :**         
+같은 패키지 내에서만 접근이 가능합니다.             
+        
+**private :**     
+접근 제한이 없습니다. -> 아무곳에서나 가능        
+       
 # interface와 abstract의 차이를 설명하시오.
 # StringBuilder와 StringBuffer의 차이에 대해 설명하시오.
+String 에 대해서 먼저 설명    
+    
+* **String :** immutable 클래스로 객체의 값이 변하지 않는다는 특성이 있다.     
+그렇기에 ```+``` 연산시에 객체의 값을 바꾸는 것이 아니라 메모리를 새롭게 할당한다는 단점이 있습니다.      
+   
+* **StringBuffer** : String과 달리 mutable 클래스로 객체의 값이 변할 수 있습니다.   
+그렇기에 ```+``` 연산시에 기존 메모리에 append 하는 형식, 그리고 멀티스레드시에 Syncronized 동기화 작용   
+   
+* **StringBuiler** : StringBuffer와 같이 mutable 클래스로 객체의 값이 변할 수 있습니다.         
+그렇기에 ```+``` 연산시에 기존 메모리에 append 하는 형식,      
+그러나 Syncronized 동기화를 사용하지 않아 단일 스레드시에 좋습니다.          
+
 # try-with-resources에 대해 설명하시오.
 # Synchronize에 대해 설명하시오.
 # Synchronize를 하기 위한 방법은 무엇이 있나요?
