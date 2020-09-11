@@ -208,7 +208,7 @@ POJO를 좀 더 쉽게 이해하기 위해서 반대로 POJO가 아닌 클래스
 반드시 Servlet에서 요구하는 규칙에 맞게 클래스를 만들어야 실행할 수 있다.  
 다음은 Servlet 클래스 작성 규칙이다.  
   
--javax.servlet, javax.servlet.http 패키지를 inport 해야한다.  
+-javax.servlet, javax.servlet.http 패키지를 import 해야한다.  
 -public 클래스로 선언되어야 한다.  
 -기본 생성자가 있어야 한다.  
 -생명주기에 해당하는 메소드를 재정의해야한다. 
