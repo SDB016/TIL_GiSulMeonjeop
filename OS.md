@@ -159,8 +159,8 @@ blocked 상태는 다른 I/O 작업을 기다리는 상태이기 때문에 스�
       
 [뒤로](https://github.com/JaeYeopHan/for_beginner)/[위로](#part-1-4-운영체제)
 
-</br>
-
+</br>     
+    
 ---
 
 ## CPU 스케줄러
@@ -232,10 +232,10 @@ _스케줄링 대상은 Ready Queue 에 있는 프로세스들이다._
 * aging  
   아무리 우선순위가 낮은 프로세스라도 오래 기다리면 우선순위를 높여주자.
 
-</br>
-
-### Round Robin
-
+</br>    
+     
+### Round Robin     
+     
 #### 특징
 
 * 현대적인 CPU 스케줄링
@@ -244,9 +244,9 @@ _스케줄링 대상은 Ready Queue 에 있는 프로세스들이다._
 * `RR`은 CPU 사용시간이 랜덤한 프로세스들이 섞여있을 경우에 효율적
 * `RR`이 가능한 이유는 프로세스의 context 를 save 할 수 있기 때문이다.
 
-#### 장점
-
-* `Response time`이 빨라진다.  
+#### 장점    
+      
+* `Response time`이 빨라진다.      
   n 개의 프로세스가 ready queue 에 있고 할당시간이 q(time quantum)인 경우 각 프로세스는 q 단위로 CPU 시간의 1/n 을 얻는다. 즉, 어떤 프로세스도 (n-1)q time unit 이상 기다리지 않는다.
 * 프로세스가 기다리는 시간이 CPU 를 사용할 만큼 증가한다.  
   공정한 스케줄링이라고 할 수 있다.
@@ -260,7 +260,7 @@ _스케줄링 대상은 Ready Queue 에 있는 프로세스들이다._
 [뒤로](https://github.com/JaeYeopHan/for_beginner)/[위로](#part-1-4-운영체제)
 
 </br>
-
+     
 ---
 
 ## 동기와 비동기의 차이
