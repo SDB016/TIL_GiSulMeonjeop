@@ -132,14 +132,15 @@ List 는 Syncronized가 아니여서 단일 스레드에서는 유용하지만 �
 다양한 상황에서 메소드가 호출될 수 있도록 한다.    
 
 # CheckedException과 UnCheckedException의 차이를 설명하시오.   
-**CheckedException :**   
-반드시 명시적으로 처리해야 하기 때문에 Checked Exception이라고 하며,     
-try catch를 해서 에러를 잡든 throws를 통해서 호출한 메서드로 예외를 던져야 합니다.       
-예를 들면 : I/O 관련 Exception       
+**CheckedException :**      
+반드시 명시적으로 처리해야 하기 때문에 Checked Exception이라고 하며,        
+Rollback 안되기에 try catch를 해서 에러를 잡든 throws를 통해서 호출한 메서드로 예외를 던져야 합니다.          
+예를 들면 : IOException , SQLException      
+
        
 **UnCheckedException :**    
-명시적인 예외 처리를 강제하지 않는 특징이 있기 때문에 Unchecked Exception이라 하며,    
-catch로 잡거나 throw로 호출한 메서드로 예외를 던지지 않아도 상관이 없습니다.         
+명시적인 예외 처리를 강제하지 않는 특징이 있기 때문에 Unchecked Exception이라 하며, 
+Rollback 진행하기에 catch로 잡거나 throw로 호출한 메서드로 예외를 던지지 않아도 상관이 없습니다.         
 예를 들면 : IllegalArgumentException, NullpointerException   
    
    
@@ -186,7 +187,16 @@ new String()은 힙 메모리 영역에 새로운 인스턴스를 생성하는 �
 또 다른 접근으로는 어떠한 클래스를 사용함에 있어서 100개의 파일에서 new 생성하는 것이 아니라         
 상위 개념의 컨테이너에서 해당 객체를 내려 받는식의 방법도 고려할 수 있다.         
       
-# OOP와 AOP에 대한 차이를 설명해주세요.     
+# OOP와 AOP에 대한 차이를 설명해주세요.        
+OOP 객체지향 프로그램    
+AOP 관점지향 프로그램     
+
+AOP는 OOP를 더욱 OOP답게 프로그래밍 할 수 있게 도와주는 것으로   
+핵심적인 기능을 중점으로 만들고 
+횡단 관심(Crosscut Concern) 과 핵심 관심(Core Concern)으로 나누어   
+
+애플리케이션의 핵심적인 기능과 부가적인 기능을 분리해, Aspect라는 모듈로 만들어 설계하고 개발하는 방법이다.    
+ 
 # POJO가 무엇인가요?   
 Plain old java object 의 약어로      
 '오래된' 방식의 '순수한' 자바객체라는 말입니다.      
