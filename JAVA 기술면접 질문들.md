@@ -61,8 +61,8 @@ String 에 대해서 먼저 설명
 그렇기에 ```+``` 연산시에 객체의 값을 바꾸는 것이 아니라 메모리를 새롭게 할당한다는 단점이 있습니다.      
    
 * **StringBuffer** : String과 달리 mutable 클래스로 객체의 값이 변할 수 있습니다.   
-그렇기에 ```+``` 연산시에 기존 메모리에 append 하는 형식, 그리고 멀티스레드시에 Syncronized 동기화 작용   
-   
+그렇기에 ```+``` 연산시에 기존 메모리에 append 하는 형식, 그리고 멀티스레드시에 Syncronize 동기화 작용      
+      
 * **StringBuiler** : StringBuffer와 같이 mutable 클래스로 객체의 값이 변할 수 있습니다.         
 그렇기에 ```+``` 연산시에 기존 메모리에 append 하는 형식,      
 그러나 Syncronized 동기화를 사용하지 않아 단일 스레드시에 좋습니다.          
