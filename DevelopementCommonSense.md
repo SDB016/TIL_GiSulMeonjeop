@@ -1,7 +1,6 @@
 # Part 1-1 Development common sense
 
 * [객체 지향 프로그래밍이란 무엇인가](#object-oriented-programming)
-  * 객체 지향 개발 원칙은 무엇인가?
 * [RESTful API 란](#restful-api)
 * [TDD 란 무엇이며 어떠한 장점이 있는가](#tdd)
 * [함수형 프로그래밍](#함수형-프로그래밍)
