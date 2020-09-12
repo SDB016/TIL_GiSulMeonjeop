@@ -194,11 +194,8 @@ UPDATE 의 경우는 INSERT 의 경우, DELETE 의 경우의 문제점을 동시
 
 #### 반정규화(De-normalization, 비정규화)
 
-`반정규화`는 정규화된 엔티티, 속성, 관계를 시스템의 성능 향상 및 개발과 운영의 단순화를 위해 중복 통합, 분리 등을 수행하는 데이터 모델링 기법 중 하나이다. 
-디스크 I/O 량이 많아서 조회 시 성능이 저하되거나, 
-테이블끼리의 경로가 너무 멀어 조인으로 인한 성능 저하가 예상되거나, 
-칼럼을 계산하여 조회할 때 성능이 저하될 것이 예상되는 경우 반정규화를 수행하게 된다. 
-일반적으로 조회에 대한 처리 성능이 중요하다고 판단될 때 부분적으로 반정규화를 고려하게 된다.
+`반정규화`는 정규화된 엔티티, 속성, 관계를 성능 향상 및 개발과 운영의 단순화를 위해 정규화를 위배하는 작업입니다.         
+일반적으로 조회에 대한 처리 성능이 중요하다고 판단될 때 부분적으로 반정규화를 고려하게 됩니다.    
 
 #### 5-1. 무엇이 반정규화의 대상이 되는가?
 
@@ -300,35 +297,21 @@ Transaction 은 다음의 ACID 라는 4 가지 특성을 만족해야 한다.
 
 #### 교착상태란 무엇인가
 
-복수의 트랜잭션을 사용하다보면 교착상태가 일어날수 있다. 
-교착상태란 두 개 이상의 트랜잭션이 특정 자원(테이블 또는 행)의 잠금(Lock)을 획득한 채 
-다른 트랜잭션이 소유하고 있는 잠금을 요구하면 아무리 기다려도 상황이 바뀌지 않는 상태가 되는데, 
-이를 `교착상태`라고 한다.
+**교착상태 :** 
+두 개 이상의 트랜잭션이 특정 자원(테이블 또는 행)의 잠금(Lock)을 획득한 채 
+다른 트랜잭션이 소유하고 있는 잠금을 요구하면 아무리 기다려도 상황이 바뀌지 않는 상태
+
 
 #### 교착상태의 예(MySQL)
 
-MySQL [MVCC](https://en.wikipedia.org/wiki/Multiversion_concurrency_control)에 따른 특성 때문에 트랜잭션에서 갱신 연산(Insert, Update, Delete)를 실행하면 잠금을 획득한다. (기본은 행에 대한 잠금)
-
-![classic deadlock 출처: https://darkiri.wordpress.com/tag/sql-server/](/Database/images/deadlock.png)
-
-트랜잭션 1이 테이블 B의 첫번째 행의 잠금을 얻고 트랜잭션 2도 테이블 A의 첫번째 행의 잠금을 얻었다고 하자.
-```SQL
-Transaction 1> create table B (i1 int not null primary key) engine = innodb;
-Transaction 2> create table A (i1 int not null primary key) engine = innodb;
-
-Transaction 1> start transaction; insert into B values(1);
-Transaction 2> start transaction; insert into A values(1);
-```
-
-트랜잭션을 commit 하지 않은채 서로의 첫번째 행에 대한 잠금을 요청하면
-
-
+MySQL [MVCC](https://en.wikipedia.org/wiki/Multiversion_concurrency_control)에 따른 특성 때문에        
+트랜잭션에서 갱신 연산(Insert, Update, Delete)를 실행하면 잠금을 획득한다. (기본은 행에 대한 잠금)       
+      
 ```SQL
 Transaction 1> insert into A values(1);
 Transaction 2> insert into B values(1);
 ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction
 ```
-
 Deadlock 이 발생한다. 일반적인 DBMS는 교착상태를 독자적으로 검출해 보고한다.
 
 #### 교착 상태의 빈도를 낮추는 방법
@@ -336,7 +319,8 @@ Deadlock 이 발생한다. 일반적인 DBMS는 교착상태를 독자적으로 
 * 정해진 순서로 테이블에 접근한다. 위에서 트랜잭션 1 이 테이블 B -> A 의 순으로 접근했고,
 트랜잭션 2 는 테이블 A -> B의 순으로 접근했다. 트랜잭션들이 동일한 테이블 순으로 접근하게 한다.
 * 읽기 잠금 획득 (SELECT ~ FOR UPDATE)의 사용을 피한다.
-* 한 테이블의 복수 행을 복수의 연결에서 순서 없이 갱신하면 교착상태가 발생하기 쉽다, 이 경우에는 테이블 단위의 잠금을 획득해 갱신을 직렬화 하면 동시성을 떨어지지만 교착상태를 회피할 수 있다.
+* 한 테이블의 복수 행을 복수의 연결에서 순서 없이 갱신하면 교착상태가 발생하기 쉽다,       
+이 경우에는 테이블 단위의 잠금을 획득해 갱신을 직렬화 하면 동시성을 떨어지지만 교착상태를 회피할 수 있다.    
 </br>
 
 [뒤로](https://github.com/JaeYeopHan/for_beginner)/[위로](#part-1-5-database)
@@ -345,9 +329,13 @@ Deadlock 이 발생한다. 일반적인 DBMS는 교착상태를 독자적으로 
 
 ## Statement vs PreparedStatement
 
-우선 속도 면에서 `PreparedStatement`가 빠르다고 알려져 있다. 이유는 쿼리를 수행하기 전에 이미 쿼리가 컴파일 되어 있으며, 반복 수행의 경우 프리 컴파일된 쿼리를 통해 수행이 이루어지기 때문이다.
+우선 속도 면에서 `PreparedStatement`가 빠르다고 알려져 있다.
+이유는 쿼리를 수행하기 전에 이미 쿼리가 컴파일 되어 있으며, 
+반복 수행의 경우 프리 컴파일된 쿼리를 통해 수행이 이루어지기 때문이다.
 
-`PreparedStatement`에는 보통 변수를 설정하고 바인딩하는 `static sql`이 사용되고 `Statement`에서는 쿼리 자체에 조건이 들어가는 `dynamic sql`이 사용된다. `PreparedStatement`가 파싱 타임을 줄여주는 것은 분명하지만 `static sql`을 사용하는데 따르는 퍼포먼스 저하를 고려하지 않을 수 없다.
+`PreparedStatement`에는 보통 변수를 설정하고 바인딩하는 `static sql`이 사용되고 
+`Statement`에서는 쿼리 자체에 조건이 들어가는 `dynamic sql`이 사용된다. 
+`PreparedStatement`가 파싱 타임을 줄여주는 것은 분명하지만 `static sql`을 사용하는데 따르는 퍼포먼스 저하를 고려하지 않을 수 없다.
 
 하지만 성능을 고려할 때 시간 부분에서 가장 큰 비중을 차지하는 것은 테이블에서 레코드(row)를 가져오는 과정이고 SQL 문을 파싱하는 시간은 이 시간의 10 분의 1 에 불과하다. 그렇기 때문에 `SQL Injection` 등의 문제를 보완해주는 `PreparedStatement`를 사용하는 것이 옳다.
 
