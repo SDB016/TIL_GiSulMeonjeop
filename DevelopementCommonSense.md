@@ -27,12 +27,9 @@
 
 ## RESTful API
 
-> 월드 와이드 웹(World Wide Web a.k.a WWW)과 같은 분산 하이퍼미디어 시스템을 위한    
-소프트웨어 아키텍처의 한 형식으로 자원을 정의하고 자원에 대한 주소를 지정하는 방법 전반에 대한 패턴    
+REST : API를 자원을 중심으로 설계하고 **HTTP Method 를 통해 자원을 처리**하도록 설계하는 것이다.                  
+RESTful :  REST 의 기본 원칙을 지킨 **서비스 디자인**          
 
-RESTful :  REST 의 기본 원칙을 성실히 지킨 **서비스 디자인**      
-REST : API 설계의 중심에 **자원(Resource)** 이 있고 **HTTP Method 를 통해 자원을 처리**하도록 설계하는 것이다.                
-   
 ### REST 6 가지 원칙
 
 * Uniform Interface
