@@ -141,9 +141,10 @@ _cf) HTTP 2.0 이 발전되면서 HTTPS 가 HTTP 보다 빠르다는 사실이 �
     
 </br>
 
-## DNS round robin 방식    
+## DNS round robin 방식 - 분산처리 - 로드밸런싱   
 라운드로빈 : 프로세스들 사이에 우선순위를 두지 않고,           
 순서대로 시간단위(Time Quantum/Slice)로 CPU를 할당하는 방식의 CPU 스케줄링 알고리즘입니다.               
+    
 DNS 라운드 로빈 : Domain에 대한 IP 요청 쿼리 시, Round-Robin으로 IP를 반환하는 방식                 
     
 1. 유저는 DNS 서버에서 Domain Name을 이용하여, IP를 얻어옴    
