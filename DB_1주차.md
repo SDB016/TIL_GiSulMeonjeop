@@ -366,6 +366,7 @@ ORDER BY TEAM_NAME;
 
 ## 다중 컬럼 서브쿼리
 - 서브쿼리 결과로 여러 개의 컬럼이 반환되어 메인쿼리 조건과 동시에 비교되는 것.
+```sql
 SELECT TEAM_ID 팀코드, PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버, HEIGHT 키
 FROM PLAYER
 WHERE (TEAM_ID, HEIGHT) IN (SELECT TEAM_ID, MIN(HEIGHT)
@@ -374,8 +375,9 @@ WHERE (TEAM_ID, HEIGHT) IN (SELECT TEAM_ID, MIN(HEIGHT)
 ORDER BY TEAM_ID, PLAYER_NAME;
 // 소속팀별 키가 가장 작은 사람들의 정보를 출력.
 // 같은 팀에서 여러명의 선수가 반환될 수 있음. 키가 같은 경우.
- 
+```
 ## 연관 서브쿼리 (Correlated Subquery)
+```sql 
 SELECT T.TEAM_NAME 팀명, M.PLAYER_NAME 선수명, M.POSITION 포지션, M.BACK_NO 백넘버, M.HEIGHT 키
 FROM PLAYER M , TEAM T
 WHERE M.TEAM_ID = T.TEAM_ID
@@ -386,7 +388,6 @@ AND M.HEIGHT < (SELECT AVG(S.HEIGHT)
                 GROUP BY S.TEAM_ID)
 ORDER BY 선수명;
 // 선수 자신이 속한 팀의 평균키보다 작은 선수들의 정보를 출력하는 SQL문
- 
 SELECT STARDIUM_ID ID, STARDIUM_NAME 경기장명
 FROM STARDIUM A
 WHERE EXISTS (SELECT 1
@@ -394,9 +395,10 @@ WHERE EXISTS (SELECT 1
               WHERE X.STARDIUM_ID = A.STARDIUM_ID
               AND X.SCHE_DATE BETWEEN '20120501' AND '20120502')
 // 20120501 과 20120502 사이의 날짜에 경기가 있는 경기장 조회
+``` 
  
 ## SELECT 절에 서브쿼리 (=스칼라쿼리 : 한 행 한 컬럼만 반환하는 쿼리)
- 
+```sql
 SELECT PLAYER_NAME 선수명, HEIGHT 키, ROUND( (SELECT AVG(HEIGHT)
                                              FROM PLAYER X
                                              WHERE X.TEAM_ID = P.TEAM_ID),3) 팀평균키
@@ -412,11 +414,11 @@ WHERE P.TEAM_ID = T.TEAM_ID
 ORDER BY 선수명;
 // 서브쿼리의 결과가 마치 동적으로 생성된 테이블처럼 사용
 // 서브쿼리의 컬럼은 메인에서 사용할 수 없다. 하지만 이건 인라인뷰이기 때문에 사용가능
- 
+``` 
 ## TOP-N 쿼리
 인라인 뷰에서는 ORDER BY절이 불가하다. 따라서 인라인 뷰에서 먼저 정렬하고 정렬된 결과에서 일부데이터를 추출하는 것이 TOP-N쿼리
 TOP-N 쿼리를 수행하기 위해서는 ROWNUM이라는 연산자를 통해 건수를 제약할 수 있다.
- 
+```sql 
 SELECT PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버, HEIGHT ㅣ
 FROM (SELECT PLAYER_NAME, POSITION, BACK_NO, HEIGHT
       FROM PLAYER
@@ -425,8 +427,9 @@ FROM (SELECT PLAYER_NAME, POSITION, BACK_NO, HEIGHT
 WHERE ROWNUM <= 5;
 // 인라인 뷰에서 선수의 키를 내림차순으로 정렬한 후 메인쿼리에서 ROWNUM을 통해 5명만 추출.
 // 즉, 키가 큰순서로 상위 5명 뽑음
- 
+``` 
 ## HAVING 절에 서브쿼리
+```sql
 SELECT P.TEAM_ID 팀코드, T.TEAM_NAME 팀명, AVG(P.HEIGHT) 평균키
 FROM PLAYER P , TEAM T
 WHERE P.TEAM_ID, T.TEAM_ID
@@ -434,26 +437,28 @@ GROUP BY P.TEAM_ID, T.TEAM_NAME
 HAVING AVG(P.HEIGHT) < (SELECT AVG(HEIGHT)
                         FROM PLAYER
                         WHERE TEAM_ID = 'K02');
- 
+``` 
 ## UPDATE SET 절 서브쿼리
+```sql
 UPDATE TEAM A
 SET A.E_TEAM_NAME = (SELECT X.STARDIUM_NAME
                      FROM STARDIUM X
                      WHERE X.STARDIUM_ID = A.STARDIUM_ID);
- 
+``` 
 ## INSERT VALUES 절에 서브쿼리
+```sql
 INSERT INTO PLAYER(PLAYER_ID, PLAYER_NAME, TEAM_ID)
 VALUES( (SELECT TO_CAHR(MAX(TO_NUMBER(PLAYER_ID))+1) FROM PLAYER), '홍길동','K06');
- 
+```
 ## 뷰
 테이블은 실제 데이터를 가지고 있는 반면, 뷰는 실제 데이터가 없음
 테이블 구조가 변경되어도 뷰를 사용하는 응용프로그램은 변경하지 않아도 됨.
- 
+```sql 
 CREATE VIEW V_PLAYER_TEAM AS
 SELECT P.PLAYER_NAME ,P.POSITION, P.BACK_NO, P.TEAM_ID, T.TEAM_NAME
 FROM PLAYER P , TEAM T
 WHERE P.TEAM_ID = T.TEAM_ID;
-
+```
 # 💡 서브쿼리의 성능은 어때요?
 * MySQL 5.5 까지는 서브쿼리 최적화가 최악이라 웬만하면 Join으로 전환하자
   * 메인테이블의 row 수 만큼 서브 쿼리를 수행한다
