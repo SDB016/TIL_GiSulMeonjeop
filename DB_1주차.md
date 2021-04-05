@@ -284,6 +284,7 @@ X$ 테이블은 오라클의 메모리정보를 볼 수있는 SQL 인터페이�
 일반적으로 `WHERE`절에 사용하는 것을 `서브쿼리(Subquery)`라고 한다.        
         
 ## 단일 행 서브쿼리
+```sql
 SELECT PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버
 FROM PLAYER
 WHERE TEAM_ID = (SELECT TEAM_ID
@@ -299,7 +300,8 @@ WHERE HEIGHT <= (SELECT AVG(HEIGHT)
                  FROM PLAYER)
 ORDER BY PLAYER_NAME;
 // 평균키를 알아내는 서브쿼리와 그 결과로 평균키 이하인 선수를 출력
- 
+```
+
 ## 다중 행 서브쿼리
 서브쿼리의 결과가 2건이상 반환될 수 있다면 '반드시' 다중행 비교연산자(IN, ALL, ANY, SOME)과 함께 사용해야한다.
  
@@ -309,7 +311,8 @@ IN(서브쿼리) : 서브쿼리의 결과에 존재하는 값과 동일한 조�
 비교연산자 ANY(서브쿼리) : 비교연산자에 ">" 를 썼다면 ANY가 어떤 하나라도 맞는지 조건이기 때문에
                          결과중에 가장 작은값보다 크면 만족한다는 뜻. (= SOME)
 EXISTS(서브쿼리) : 서브쿼리의 결과를 만족하는 값이 존재하는지 여부 확인 1건만 찾으면 더이상 검색 안함
- 
+
+```sql
 SELECT REGION_NAME 연고지명, TEAM_NAME 팀명, E_TEAM_NAME 영문팀명
 FROM TEAM
 WHERE TEAM_ID IN (SELECT TEAM_ID
@@ -317,7 +320,8 @@ WHERE TEAM_ID IN (SELECT TEAM_ID
                   WHERE PLAYER_NAME = '정현수')
 ORDER BY TEAM_NAME;
 // 정현수 선수가 두명이상 일때 소속 팀, 연고지명, 영문팀명 출력
- 
+```
+
 ## 다중 컬럼 서브쿼리
 - 서브쿼리 결과로 여러 개의 컬럼이 반환되어 메인쿼리 조건과 동시에 비교되는 것.
 SELECT TEAM_ID 팀코드, PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버, HEIGHT 키
