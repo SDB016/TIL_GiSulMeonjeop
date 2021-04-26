@@ -53,6 +53,10 @@ null 무결성은 특정 속성값에는 null 값을 가질 수 없다는 규칙
 
 # 💡 SQL과 NoSQL의 차이점에 대해 설명하시오.
 # 💡 Select 쿼리 실행 순서
+
+```sql
+ FROM - WHERE GROUP BY - HAVING - SELECT - ORDER BY
+```
 # 💡 PK와 FK 설명해주세요.
 # 💡 서브쿼리가 뭐에요?
 # 💡 서브쿼리의 성능은 어때요?
