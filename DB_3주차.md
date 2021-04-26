@@ -129,6 +129,163 @@ HAVING절에서 일반 조건들을 다루면 쿼리 실행 순서에 의해 퍼
 2. Oracle의 경우 Rownum
 
 # 💡 PK와 FK 설명해주세요.
-# 💡 서브쿼리가 뭐에요?
+
+# 💡 서브쿼리가 뭐에요? 
+> 출처: [기본기를 쌓는 정아마추어 코딩블로그](https://jeong-pro.tistory.com/40 )
+   
+하나의 SQL 문에 포함되어 있는 또 다른 SQL 문을 말한다.       
+쿼리문 관점에서 말하면 `SELECT 문` 안에 또다시 `SELECT문`이 있는 쿼리문이다.   
+        
+서브쿼리는 위치에 따라 명칭이 다르다.       
+`FROM`절에 사용하는 `인라인 뷰(Inline view)`,        
+`SELECT`문에 사용하는 `스칼라 서브쿼리(Scala Subquery)`,        
+일반적으로 `WHERE`절에 사용하는 것을 `서브쿼리(Subquery)`라고 한다.        
+        
+## 단일 행 서브쿼리
+```sql
+SELECT PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버
+FROM PLAYER
+WHERE TEAM_ID = (SELECT TEAM_ID
+                 FROM PLAYER
+                 WHERE PLAYER_NAME = '김남일')
+ORDER BY PLAYER_NAME;
+// 조금 억지로 만듦.
+// 김남일 선수의 소속팀을 알아냄. 만약 김남일 선수가 동명이인으로 두명이상이 있다면 에러남
+ 
+SELECT PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버
+FROM PLAYER
+WHERE HEIGHT <= (SELECT AVG(HEIGHT)
+                 FROM PLAYER)
+ORDER BY PLAYER_NAME;
+// 평균키를 알아내는 서브쿼리와 그 결과로 평균키 이하인 선수를 출력
+```
+
+## 다중 행 서브쿼리
+서브쿼리의 결과가 2건이상 반환될 수 있다면 '반드시' 다중행 비교연산자(IN, ALL, ANY, SOME)과 함께 사용해야한다.    
+      
+* **IN(서브쿼리) :**   
+  서브쿼리의 결과에 존재하는 값과 동일한 조건의미    
+* **비교연산자 ALL(서브쿼리) :** 
+  비교연산자에 `>` 를 썼다면 ALL이 모든 값을 만족하는 조건이기 때문에     
+  결과중에 가장 큰값보다 커야 만족한다는 뜻.    
+* **비교연산자 ANY(서브쿼리) :**    
+  비교연산자에 ">" 를 썼다면 ANY가 어떤 하나라도 맞는지 조건이기 때문에    
+  결과중에 가장 작은값보다 크면 만족한다는 뜻. (= SOME)   
+* **EXISTS(서브쿼리) :**   
+  서브쿼리의 결과를 만족하는 값이 존재하는지 여부 확인 1건만 찾으면 더이상 검색 안함    
+   
+```sql
+SELECT REGION_NAME 연고지명, TEAM_NAME 팀명, E_TEAM_NAME 영문팀명
+FROM TEAM
+WHERE TEAM_ID IN (SELECT TEAM_ID
+                  FROM PLAYER
+                  WHERE PLAYER_NAME = '정현수')
+ORDER BY TEAM_NAME;
+// 정현수 선수가 두명이상 일때 소속 팀, 연고지명, 영문팀명 출력
+```
+
+## 다중 컬럼 서브쿼리
+- 서브쿼리 결과로 여러 개의 컬럼이 반환되어 메인쿼리 조건과 동시에 비교되는 것.
+```sql
+SELECT TEAM_ID 팀코드, PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버, HEIGHT 키
+FROM PLAYER
+WHERE (TEAM_ID, HEIGHT) IN (SELECT TEAM_ID, MIN(HEIGHT)
+                            FROM PLAYER
+                            GROUP BY TEAM_ID)
+ORDER BY TEAM_ID, PLAYER_NAME;
+// 소속팀별 키가 가장 작은 사람들의 정보를 출력.
+// 같은 팀에서 여러명의 선수가 반환될 수 있음. 키가 같은 경우.
+```
+## 연관 서브쿼리 (Correlated Subquery)
+```sql 
+SELECT T.TEAM_NAME 팀명, M.PLAYER_NAME 선수명, M.POSITION 포지션, M.BACK_NO 백넘버, M.HEIGHT 키
+FROM PLAYER M , TEAM T
+WHERE M.TEAM_ID = T.TEAM_ID
+AND M.HEIGHT < (SELECT AVG(S.HEIGHT)
+                FROM PLAYER S
+                WHERE S.TEAM_ID = M.TEAM_ID
+                AND S.HEIGHT IS NOT NULL
+                GROUP BY S.TEAM_ID)
+ORDER BY 선수명;
+// 선수 자신이 속한 팀의 평균키보다 작은 선수들의 정보를 출력하는 SQL문
+SELECT STARDIUM_ID ID, STARDIUM_NAME 경기장명
+FROM STARDIUM A
+WHERE EXISTS (SELECT 1
+              FROM SCHEDULE X
+              WHERE X.STARDIUM_ID = A.STARDIUM_ID
+              AND X.SCHE_DATE BETWEEN '20120501' AND '20120502')
+// 20120501 과 20120502 사이의 날짜에 경기가 있는 경기장 조회
+``` 
+ 
+## SELECT 절에 서브쿼리 (=스칼라쿼리 : 한 행 한 컬럼만 반환하는 쿼리)
+```sql
+SELECT PLAYER_NAME 선수명, HEIGHT 키, ROUND( (SELECT AVG(HEIGHT)
+                                             FROM PLAYER X
+                                             WHERE X.TEAM_ID = P.TEAM_ID),3) 팀평균키
+FROM PLAYER P
+ 
+## FROM 절에 서브쿼리
+SELECT T.TEAM_NAME 팀명, P.PLAYER_NAME 선수명, P.BACK_NO 백넘버
+FROM (SELECT TEAM_ID, PLAYER_NAME, BACK_NO
+      FROM PLAYER
+      WHERE POSITION = 'MF') P,
+      TEAM T
+WHERE P.TEAM_ID = T.TEAM_ID
+ORDER BY 선수명;
+// 서브쿼리의 결과가 마치 동적으로 생성된 테이블처럼 사용
+// 서브쿼리의 컬럼은 메인에서 사용할 수 없다. 하지만 이건 인라인뷰이기 때문에 사용가능
+``` 
+## TOP-N 쿼리
+인라인 뷰에서는 ORDER BY절이 불가하다. 따라서 인라인 뷰에서 먼저 정렬하고 정렬된 결과에서 일부데이터를 추출하는 것이 TOP-N쿼리
+TOP-N 쿼리를 수행하기 위해서는 ROWNUM이라는 연산자를 통해 건수를 제약할 수 있다.
+```sql 
+SELECT PLAYER_NAME 선수명, POSITION 포지션, BACK_NO 백넘버, HEIGHT ㅣ
+FROM (SELECT PLAYER_NAME, POSITION, BACK_NO, HEIGHT
+      FROM PLAYER
+      WHERE HEIGHT IS NOT NULL
+      ORDER BY HEIGHT DESC)
+WHERE ROWNUM <= 5;
+// 인라인 뷰에서 선수의 키를 내림차순으로 정렬한 후 메인쿼리에서 ROWNUM을 통해 5명만 추출.
+// 즉, 키가 큰순서로 상위 5명 뽑음
+``` 
+## HAVING 절에 서브쿼리
+```sql
+SELECT P.TEAM_ID 팀코드, T.TEAM_NAME 팀명, AVG(P.HEIGHT) 평균키
+FROM PLAYER P , TEAM T
+WHERE P.TEAM_ID, T.TEAM_ID
+GROUP BY P.TEAM_ID, T.TEAM_NAME
+HAVING AVG(P.HEIGHT) < (SELECT AVG(HEIGHT)
+                        FROM PLAYER
+                        WHERE TEAM_ID = 'K02');
+``` 
+## UPDATE SET 절 서브쿼리
+```sql
+UPDATE TEAM A
+SET A.E_TEAM_NAME = (SELECT X.STARDIUM_NAME
+                     FROM STARDIUM X
+                     WHERE X.STARDIUM_ID = A.STARDIUM_ID);
+``` 
+## INSERT VALUES 절에 서브쿼리
+```sql
+INSERT INTO PLAYER(PLAYER_ID, PLAYER_NAME, TEAM_ID)
+VALUES( (SELECT TO_CAHR(MAX(TO_NUMBER(PLAYER_ID))+1) FROM PLAYER), '홍길동','K06');
+```
+## 뷰
+테이블은 실제 데이터를 가지고 있는 반면, 뷰는 실제 데이터가 없음
+테이블 구조가 변경되어도 뷰를 사용하는 응용프로그램은 변경하지 않아도 됨.
+```sql 
+CREATE VIEW V_PLAYER_TEAM AS
+SELECT P.PLAYER_NAME ,P.POSITION, P.BACK_NO, P.TEAM_ID, T.TEAM_NAME
+FROM PLAYER P , TEAM T
+WHERE P.TEAM_ID = T.TEAM_ID;
+```
 # 💡 서브쿼리의 성능은 어때요?
+* MySQL 5.5 까지는 서브쿼리 최적화가 최악이라 웬만하면 Join으로 전환하자
+  * 메인테이블의 row 수 만큼 서브 쿼리를 수행한다
+  * MySQL 5.6 에서 서브 쿼리가 대폭 최적화 되었다.
+  * 다만 최적화가 적용 안되는 조건들이 다수 존재한다
+* 버전/조건 관계 없이 좋은 성능을 내려면 최대한 Join을 이용하자
+  * Join을 사용하기가 너무 어렵다면 Subquery는 사용하되, MySQL 5.5 이하라면 절대 사용하지 않는다. 
+  * 차라리 쿼리를 나눠서 2번 실행 (메인쿼리/서브쿼리)하고 애플리케이션에서 조립하는게 낫다.
+
 # 💡 %LIKE%와 elasticsearch의 차이점을 설명해주세요.
