@@ -401,3 +401,4 @@ WHERE P.TEAM_ID = T.TEAM_ID;
 
 # 이건 잠시 저장
 SOAP방식과 REST방식의 차이점은?  
+​HTTP 프로토콜로는 접근이 불가합니다.
