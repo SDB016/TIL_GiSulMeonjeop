@@ -50,6 +50,15 @@ Locking 단위가 작으면 병행성 수준이 높아지며 대신 Locking 오�
 타임 스탬프 기법을 이용하며 버전을 부여하여 관리하는 기법
     
 # 💡 잠금 기법의 문제점에 대해서 말하시오.
+
+|문제점|의미|
+|----|---|
+|갱신 분실<br>(Lost Update)|- 연산결과의 일부가 없어지는 현상<br>- 두 개 이상의 트랜잭션이 같은 자료를 공유하여 갱신할 때<br>갱신 결과의 일부가 없어지는 현상|
+|비완료 의존성, 임시 갱신<br>(Uncommitted Dependency)|- 하나의 Transaction 수행이 실패 후 회복되기 전에<br>다른 Transaction이 실패한 갱신결과를 참조하는 현상|
+|모순성(Inconsistency)<br>불일치 분석(Inconsistent Analysis)|- 얻어진 결과가 일관성 없이 서로 다른 현상|
+|연쇄 복귀<br>(Cascading Rollback)|- 하나의 Transaction이 취소 됨으로 인해<br>연쇄적으로 다른 Transaction도 취소되는 현상|
+
+
 # 💡 교착상태(Deadlock)란 무엇인가?
 > [참고하기 좋은 사이트](https://sosopro.tistory.com/55)   
    
