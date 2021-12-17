@@ -89,8 +89,129 @@ Explain은 MySQL 서버가 어떠한 쿼리를 실행할 것인가.
       |Using join buffer(Block Nested Loop)|조인에 적절한 인덱스가 없어 조인 버퍼를 이용했음을 표시한다.|
       |Using join buffer(Batched Key Access)|Batched Key Access(BKAJ) 알고리즘을 위한 조인 버퍼를 사용했음을 표시한다.|
 	
-	
-	
+# JSON 형식 
+
+```sql
+explain format = json
+select m.*, o.*, t.* from member  m
+inner join orders o on m.id = o.member_id
+inner join transaction t on o.transaction_id = t.id
+where m.id in (1, 2, 33)
+```
+```json
+{
+  "query_block": {
+    "select_id": 1,
+    "cost_info": {
+      "query_cost": "449.03"
+    },
+    "nested_loop": [
+      {
+        "table": {
+          "table_name": "m",
+          "access_type": "range",
+          "possible_keys": [
+            "PRIMARY"
+          ],
+          "key": "PRIMARY",
+          "used_key_parts": [
+            "id"
+          ],
+          "key_length": "8",
+          "rows_examined_per_scan": 3,
+          "rows_produced_per_join": 3,
+          "filtered": "100.00",
+          "cost_info": {
+            "read_cost": "3.61",
+            "eval_cost": "0.60",
+            "prefix_cost": "4.21",
+            "data_read_per_join": "6K"
+          },
+          "used_columns": [
+            "id",
+            "email",
+            "name"
+          ],
+          "attached_condition": "(`sample`.`m`.`id` in (1,2,33))"
+        }
+      },
+      {
+        "table": {
+          "table_name": "o",
+          "access_type": "ref",
+          "possible_keys": [
+            "FKpktxwhj3x9m4gth5ff6bkqgeb",
+            "FKrylnffj7sn97iepyqadlfnsg0"
+          ],
+          "key": "FKpktxwhj3x9m4gth5ff6bkqgeb",
+          "used_key_parts": [
+            "member_id"
+          ],
+          "key_length": "8",
+          "ref": [
+            "sample.m.id"
+          ],
+          "rows_examined_per_scan": 90,
+          "rows_produced_per_join": 272,
+          "filtered": "100.00",
+          "cost_info": {
+            "read_cost": "63.00",
+            "eval_cost": "54.55",
+            "prefix_cost": "121.76",
+            "data_read_per_join": "279K"
+          },
+          "used_columns": [
+            "id",
+            "order_number",
+            "member_id",
+            "transaction_id"
+          ]
+        }
+      },
+      {
+        "table": {
+          "table_name": "t",
+          "access_type": "eq_ref",
+          "possible_keys": [
+            "PRIMARY"
+          ],
+          "key": "PRIMARY",
+          "used_key_parts": [
+            "id"
+          ],
+          "key_length": "8",
+          "ref": [
+            "sample.o.transaction_id"
+          ],
+          "rows_examined_per_scan": 1,
+          "rows_produced_per_join": 272,
+          "filtered": "100.00",
+          "cost_info": {
+            "read_cost": "272.73",
+            "eval_cost": "54.55",
+            "prefix_cost": "449.03",
+            "data_read_per_join": "820K"
+          },
+          "used_columns": [
+            "id",
+            "code",
+            "partner_transaction_id",
+            "payment_method_type"
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+# WorkBench Visual Explain 
+
+![image](https://user-images.githubusercontent.com/50267433/146504381-6951e694-283e-4762-92e1-5c4bd7bb0f51.png)
+
+
+
+
 
 # Slow 쿼리 
 
