@@ -25,3 +25,6 @@ Explain은 MySQL 서버가 어떠한 쿼리를 실행할 것인가.
 * type : 
 *
 **
+
+# Slow 쿼리 
+
