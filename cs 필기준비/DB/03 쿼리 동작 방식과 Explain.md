@@ -101,47 +101,46 @@ Explain은 MySQL 서버가 어떠한 쿼리를 실행할 것인가.
 
 |id|select_type|table|partitions|type|possible_keys|key|key_len|ref|rows|filtered|Extra|
 |-|------------|-----|----------|----|-------------|---|-------|---|----|--------|-----|
-|‘1’|‘SIMPLE’|‘m’|NULL|‘range’|‘PRIMARY’|‘PRIMARY’|‘8’|NULL|‘3’|‘100.00’|‘Using where’|
-|‘1’|‘SIMPLE’|‘o’|NULL|‘ref’|‘FKpktxw…’|‘FKpktxw…’|‘8’|‘sample.m.id’|‘90’|‘100.00’|NULL|
-|‘1’|‘SIMPLE’|‘t’|NULL|‘eq_ref’|‘PRIMARY’|‘PRIMARY’|‘8’|‘sample.o.transaction_id’|‘1’|‘100.00’|NULL|
+|1|SIMPLE|m|NULL|range|PRIMARY|PRIMARY|8|NULL|3|100.00|Using where|
+|1|SIMPLE|o|NULL|ref|FKpktxw…|FKpktxw…|8|sample.m.id|90|100.00|NULL|
+|1|SIMPLE|t|NULL|eq_ref|PRIMARY|PRIMARY|8|sample.o.transaction_id|1|100.00|NULL|
 
-* table: 접근하고 있는 테이블에 대해 표시한다(alias로 보여줌)   
-* id : select에 붙은 번호,   
-* select_type : 대부분 SIMPLE 값이 출력되고, 서브쿼리나 UNION을 사용하면 바뀐다.   
-* partitions : 파티셔닝 되어있는 경우에 사용된다.(없으면 null)      
-* type : 접근 방식을 표현한다.   
-    테이블에서 어떻게 행 데이터를 가져올 것인가, 대상 테이블로의 접근이 효율적일지 여부를 판단하는 아주 중요한 항목     
-    * ALL : 
-         * 전체 행 스캔, 테이블의 데이터 전체에 접근한다.   
-    * index : 
-         * 인덱스 스캔, 테이블의 특정 인덱스의 전체 엔트리에 접근한다.  
-    * eq_ref : 
-         * 조인이 내부 테이블로 접근할 때 기본키 또는 공유 키에 의한 loockup이 일어난다. 
-         * const와 비슷하지만 조인의 내부 테이블에 접근한다는 점이 다르다. 
-    * ref :   
-         * 고유키가 아닌, 인덱스에 대한 등가비교 여러 개 행에 접근할 가능성이 있다.       
-    * ref_or_null :
-         * ref와 마찬가지로 인덱스 접근 시 맨 앞에 저장되어 있는 NULL의 엔트리를 검색한다.      
-    * fulltext: 
-         * fulltext 인덱스를 사용한 검색 
-    * const : 
-        * 기본키 또는 고유키에 의한 lookup(등가비교),   
-        * 조인이 아닌 가장 외부의 테이블에 접근 하는 방식     
-        * 결과는 항상 1행이다.    
-        * 단 기본 키, 고유 키를 사용하고 있으므로 범위 검색으로 지정하는 경우 const가 되지 않는다.     
-    * system : 
-        * 테이블에 1행밖에 없는 경우의 특수한 접근 방식   
-    * range : 
-        * 인덱스 특점 범위의 행에 접근한다.   
-    * index_merge : 
-        * 여러 개인스턴스를 사용해 행을 가져오고 그 결과를 통합한다.   
-    * unique_subquery : 
-        * IN 서브쿼리 접근에서 기본 키 또는 고유 키를 사용한다.   
-        * 이 방식은 쓸데 없는 오베헤드를 줄여 상당히 빠른다.   
-    * index_subquery : 
-        * unique_sunquery 와 거의 비슷하지만, 고유한 인덱스를 사용하지 않는점이 다르다. 
-        * 이 접근 방식도 상당히 빠르다.          
-* possible_keys : 
+## Table 
+
+* 접근하고 있는 테이블에 대해 표시한다(alias로 보여줌)   
+
+## id 
+
+* select에 붙은 번호,   
+
+## select_type 
+
+* 대부분의 쿼리에서 SIMPLE 값이 출력되고, 서브쿼리나 UNION을 사용하면 바뀐다.  
+
+## partitions 
+  
+* 테이블이 파티셔닝 되어있는 경우에 파티션 목록이 출력된다.(없으면 null)      
+
+## type 
+* 접근 방식을 표현하며, 테이블에서 어떻게 행 데이터를 가져올 것인가를 나타낸다.      
+* 대상 테이블로의 접근이 효율적일지 여부를 판단해주는 아주 중요한 항목이다.        
+
+|type|설명|
+|----|---|
+|ALL|전체 행 스캔, 테이블의 데이터 전체에 접근한다.|
+|index|인덱스 스캔, 테이블의 특정 인덱스의 전체 엔트리에 접근한다.|
+|eq_ref|조인이 내부 테이블로 접근할 때 기본키 또는 공유 키에 의한 loockup이 일어난다.<br>const와 비슷하지만 조인의 내부 테이블에 접근한다는 점이 다르다.|
+|ref|고유키가 아닌, 인덱스에 대한 등가비교 여러 개 행에 접근할 가능성이 있다.|
+|ref_or_null|ref와 마찬가지로 인덱스 접근 시 맨 앞에 저장되어 있는 NULL의 엔트리를 검색한다.|
+|fulltext|fulltext 인덱스를 사용한 검색|
+|const|기본키 또는 고유키에 의한 lookup(등가비교)<br> 조인이 아닌 가장 외부의 테이블에 접근 하는 방식<br>결과는 항상 1인 행<br>단 기본 키, 고유 키를 사용하고 있으므로 범위 검색으로 지정하는 경우 const가 되지 않는다<br>|          
+|system|테이블에 1행밖에 없는 경우의 특수한 접근 방식|   
+|range|인덱스 특점 범위의 행에 접근한다.|      
+|index_merge|여러 개인스턴스를 사용해 행을 가져오고 그 결과를 통합한다|     
+|unique_subquery|IN 서브쿼리 접근에서 기본 키 또는 고유 키를 사용한다.<br>이 방식은 쓸데 없는 오베헤드를 줄여 상당히 빠르다.|      
+|index_subquery|unique_sunquery 와 거의 비슷하지만, 고유한 인덱스를 사용하지 않는점이 다르다.<br>이 접근 방식도 상당히 빠르다.|             
+
+## possible_keys : 
     * 이용 가능성이 있는 인덱스의 목록 
 * key :
     * 이용 가능성이 있는 인덱스의 목록 중, 실제로 옵티마이저가 선택한 인덱스     
