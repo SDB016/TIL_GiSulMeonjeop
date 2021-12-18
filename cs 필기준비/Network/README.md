@@ -37,3 +37,5 @@
 
 ## 11. 
 
+## 12. HTTP가 80이고 HTTPS가 443인 이유  
+https://johngrib.github.io/wiki/why-http-80-https-443/
