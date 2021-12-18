@@ -1,5 +1,7 @@
 # 쿼리 실행 동작  
 
+![09610baf606b4854b273a8ffc452b009](https://user-images.githubusercontent.com/50267433/146646441-bdfcf900-7763-476e-b6c7-36e08849286b.png)
+
 1. Query Caching 
 2. Parsing 
 3. Preprocessor
