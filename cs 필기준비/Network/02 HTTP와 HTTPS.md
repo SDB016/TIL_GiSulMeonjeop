@@ -108,6 +108,10 @@ TLS 1.0은 SSL 3.0을 계승한다.
 그 데이터가 공개키와 쌍을 이루는 비공개 키에 의해서 암호화 되었다는 것을 의미한다.       
 즉 공개키가 데이터를 제공한 사람의 신원을 보장해주게 되는 것이다.       
 
+# 여담(포트번호 이유)  
+  
+https://johngrib.github.io/wiki/why-http-80-https-443/  
+
 # 참고 
 * https://cheese10yun.github.io/https/
 * https://12bme.tistory.com/80
