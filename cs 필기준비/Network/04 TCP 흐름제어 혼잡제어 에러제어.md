@@ -117,10 +117,43 @@ Cwnd = Cwnd + 1 until min(Cwnd, Awnd)
 ![image](https://user-images.githubusercontent.com/50267433/146672517-7c8e2a44-fa5f-4973-b9ac-e7665ce83d1c.png)
    
     
-# 오류제어 
+# 에러제어 
+에러제어는 2단계로 구성된다.   
 
-https://www.youtube.com/watch?v=FxDRd71xfpw&ab_channel=%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99   
- 
-* 시퀀스넘버 기반
-* ACK로 수신 확인
-* 오류 발생 시 CRC이용, 송신측에 프레임 재전송 요청
+* 에러 검출(detection)
+    * CRC(Cyclic Redundancy Check) 
+    * Checksum(체크섬 - IP/TCP용) 
+* 에러 정정(correction)  
+    * Forward error correction(전진 에러 수정; 순반향 오류 정정)  
+    * 재전송(Automatic Repeat Request(ARO; 자동 재전송 요구)   
+        * stop-and wait  
+        * go back n    
+        * selective repeat ARQ  
+  
+이외에도 에러 무시 방법도 있다.     
+   
+**에러제어는 어느 계층에서?**   
+* 원칙적으로는, 흐름제어와 같이 node to node에서 이루어진다.       
+  실제 대부분 Link Layer Protocol에서 에러 제어를 수행한다.    
+* 하지만 TCP는 신뢰성있는 서비스를 제공하는 전송 계층 프로토콜로서 end to end 단계의 에러 제어를 수행한다.(흐름제어도 마찬가지이다.)   
+
+## 체크섬(Checksum)   
+
+* Pseudoheader(수도헤더)와 TCP헤더와 데이터를 2바이트로 정렬한다.         
+* checksum 필드는 모두 0으로 한다.         
+* 비트 합을 구한다. Carry가 발생하면 wrap around를 적용한다.     
+* 최종 합의 1의 보수를 구한다.   
+
+## 재전송
+### Go Back N ARQ
+  
+* Go-Back-N ARQ는 window가 허락하는 범위에서 프레임을 연속해서 전송한다.        
+* 그런데 프레임 전송에 에러가 발생하면 재전송해야하는데, 에러가 발생한 이후의 프레임은 모두 전송한다.  
+
+### Select Repeat ARQ  
+
+* 현재의 window 크기의 범위 내에서 프레임을 계속 전송하는 것은 Go-Back-N 과 같다.   
+* 만약 에러가 발생해서 재전송을 해야할 때 차이가 있다.   
+    * 에러가 발생한 프레임만 재전송한다.   
+
+
