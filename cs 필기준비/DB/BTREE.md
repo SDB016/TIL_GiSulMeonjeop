@@ -66,7 +66,20 @@ F, G, H, I, J 가 될 것이고 이는 페이지의 수용범위를 넘어서게
 수정/삭제시마다 인덱스 수정이 필요하여 성능상 이슈가 있습니다.     
 인덱스 역시 공간을 차지합니다. 많은 인덱스들은 그만큼 많은 공간을 차지합니다.     
 특히 많은 인덱스들로 인해 옵티마이저가 잘못된 인덱스를 선택할 확률이 높습니다.  
+  
+페이지는, 키를 각각의 하위 페이지의 첫번째 Row의 키값을 , Value를 페이지 번호로 가진다.     
+단, value를 보조 인덱스의 리프 페이지는 데이터페이지번호+순서로 가진다.    
 
+보조인덱스 범위 찾기 : https://www.youtube.com/watch?v=Prd1Uf7W0hc&list=PLqTUMsvO70nk8WfCyU-IPmc85390CaSqM&index=40&ab_channel=%EA%BF%80%EC%9E%BC%EC%BD%94%EB%94%A9TV  
+![image](https://user-images.githubusercontent.com/50267433/146734677-cc15da8e-89ec-41e7-8ad7-9ab5354cca4d.png)
+
+
+실제로는 보조랑 클러스터 인덱스가 같이 있을 것이다.  
+
+
+![image](https://user-images.githubusercontent.com/50267433/146735106-eac4bea7-370a-478f-81e1-33ce722c25bd.png)
+
+![image](https://user-images.githubusercontent.com/50267433/146735006-d4c60819-22ca-4228-bcf6-2a76e5247635.png)
 
 
 # 참고 
