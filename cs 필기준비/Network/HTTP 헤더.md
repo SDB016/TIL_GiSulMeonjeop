@@ -225,18 +225,69 @@ https://tofusand-dev.tistory.com/89
 
 * Cache-Control: 캐시 제어 
 * Pragma : 캐시 제어(하위 호환)  
-* Expireds : 캐시 유효기간  
+* Expires : 캐시 유효기간(하위 호환)  
 
+Pragma 와 Expires는 하위 버전의 호환을 위해 존재하고, 현재는 Cache Control로 다 해결할수 있다.  
 
+### Cache Control 
+  
+* Cache-Control: max-age : 캐시 유효 시간, 초 단위     
+* Chche-Control: no-cahce : **데이터는 캐시해도 되지만(캐시 저장소), 사용전에 항상 원래 서버에 검증하고 사용한다.**       
+* Cache-Control: no-store : 데이터에 민감한 정보가 있으므로 저장하면 안된다.(메모리에 사용하고 최대한 빨리 삭제)  
 
+### 이외에 
+* pragma : no-cache 
+     * HTTP 1.0 하위 호환이다.      
+* expires : Mon, 01 Jan 1990 00:00:00 GMT   
+     * 캐시 만료일을 정확한 날짜로 지정한다.(초단위는 몇초동안이라서 더 유연하다)    
+     * HTTP 1.0부터 사용한다.     
+     * 지금은 더 유연한 Cache-Control:max-age 를 권장한다.     
+     * Cache-Control: max-age 와 함께 사용하면 expires는 무시된다.    
 
+### 검증 헤더와 조건부 요청 헤더 정리  
 
+**검증 헤더**     
+* Etag = `ETag: v1.0`, `ETag: asid93jkrh2l`      
+* Last-Modified: Thu, 04 Jun 2020 07:19:24 GMT    
+  
+**조건부 요청 헤더**     
+* if-Match, if-None-Match: Etag 값 사용   
+* if-Modified-Since, if-Unmodified-Since: Last-Modified 값 사용  
+  
+# 프록시 캐시 
 
+`원서버 == 진짜 서버`  
+그런데 구글서버와 넷플릭스 같은 경우 미국에 있기에 실제 통신을 한다면 오래걸릴 것이다.        
+이를 해결하기 위해, 지역 가까운 곳에 서버를 두는 **프록시 캐시 서버가 있다.**(시간 빨라짐)    
 
+이러한 구조에서 프록시 캐시 서버에 들어있는 데이터를 public cache    
+웹 브라우저에 저장된 캐시를 private cache 라고 한다.     
 
+* Cache-Control: public
+    * 응답이 public 캐시에 저장이되어도 된다. - NGINX     
+* Cache-Control: private    
+    * 응답이 해당 사용자만을 위한 것임(private 캐시에 저장해야함 - 기본값)    
+* Cache-Control: s-maxage
+    * 프록시 캐시에만 적용되는 max-age  
+* Age: 60(HTTP 헤더)   
+    * 오리진 서버에서 응답 후 프록시 캐시 내에 머문 시간(초)   
+  
+# 캐시 무효화   
+> 캐시 적용 안한다 해도 웹 브라우저들이 Get요청인 경우 임의로 캐시를 하기도 한다.  
 
-**
+* Cache-Control: no-cache, no-store, must-revalidate
+* Prgma: no-chache    
+    * HTTP 1.0 하위호환    
 
-
-
-
+**설명**
+* Cache-Control: no-cache
+    * 데이터는 캐시해도 되지만, 항상 원서버에 검증하고 사용(프록시 캐시 놉)    
+* Cache-Control: no-store 
+    * 데이터에 민감한 정보가 있으므로 저장하면 안된다. 
+    * 메모리에서 사용하고 최대한 빠르게 삭제    
+* Cache-Control: must-revalidate  
+    * 캐시 만료후 최초 조회시 원 서버에 검증해야함
+    * 원 서버 접근 실패시 반드시 오류가 발생해야함 504(Gateway timeout)   
+    * must-revalidate는 캐시 유효 시간이라면 캐시를 사용한다.  
+* Pragma: no-cache   
+    * HTTP 1.0 하위 호환     
