@@ -291,3 +291,21 @@ Pragma 와 Expires는 하위 버전의 호환을 위해 존재하고, 현재는 
     * must-revalidate는 캐시 유효 시간이라면 캐시를 사용한다.  
 * Pragma: no-cache   
     * HTTP 1.0 하위 호환     
+
+## 노캐시랑, 머스트 리벨리티드 차이 
+
+![image](https://user-images.githubusercontent.com/50267433/146725123-b1e99f5e-0ff7-4cf3-afbd-15da57955233.png)
+
+노캐시는 위와 같은 프로세스를 가진다.    
+캐시 스토어에도 데이터를 저장하되 노 캐시 설정으로 원서버에 계속 요청을 보낸다.     
+
+![image](https://user-images.githubusercontent.com/50267433/146725238-b1ed7258-3152-4b11-86b4-829f3cac070a.png)
+
+그런데, 프록시 캐시 서버랑 원서버랑 통신이 되지 않는다면    
+프록시 캐시 서버는 장애보다는 옛날 데이터를 넘겨주는 것이 좋을 것 같아서 프록시 서버 캐시에 있는 데이터를 내려준다.     
+그러면 200 으로 새로운 데이터를 내려준다.     
+
+![image](https://user-images.githubusercontent.com/50267433/146725488-ade3e300-4488-42e4-a99c-ddadc3968e16.png)
+
+반면에, 머스트 리벨리티드는 504 타임아웃을 바로 호출한다.   
+
