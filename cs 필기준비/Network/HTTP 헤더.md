@@ -64,8 +64,18 @@ field-name : field-value
 참고로, 협상 헤더는 요청시에만 사용가능하다.  
 
 **협상이라는 이름에 걸맞게 요청하는 데이터가 없다면 우선순위에 따라 데이터를 응답해준다.**   
-* `Accept-Langauge:ko-KR,ko;q=0.9,en-US:q=0.8` 
-* Quality Values(q)값 사용    
-* 0~1(소수점), 클수록 높은 우선 순위이다.(생략하면 1)      
-* 요청하는 값이 아에 없으면 서버는 기본값을 보낸다.    
+1. 우선 순위를 지정하는 방법 
+    * `Accept-Langauge:ko-KR,ko;q=0.9,en-US:q=0.8` 
+    * 0~1(소수점), 클수록 높은 우선 순위이다. 생략하면 1   
+2. 구체적인 것을 우선시 하는 방법
+    * `Accept: text/*, text/plain, text/plain;format=flowed, */*`
+    * text/plain;format=flowed -> text/plain -> text/* -> */* 순이다.     
+3 요청하는 값이 아에 없으면 서버는 기본값을 보낸다.    
   
+# 전송 방식 
+
+* 단순 전송 : Content-Length  
+* 압축 전송 : Content-Encoding
+* 분할 전송 : Transfer-Encoding: chunked(분할해서 데이터 전송), Content-Length 안됨(분할범위 예상 안되서) 
+* 범위 전송 : Content-Range: bytes 1001-2000 / 2000
+
