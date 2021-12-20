@@ -1,4 +1,4 @@
-# HTTP 헤더 
+# 개요 
 
 ```
 START 라인
@@ -6,8 +6,12 @@ START 라인
 
 본문
 ```
-  
-**헤더 구조**
+
+# STRAT LINE 
+
+# HTTP Header 
+
+## 구조
 ```  
 field-name : field-value      
 // field-name 은 대소문자 구분이 없다.(field-value는 있다.)   
@@ -17,7 +21,7 @@ field-name : field-value
 * 표준 헤더들도 존재하는데 그 수가 상당하며 필요시 임의의 헤더를 추가할 수 있다.        
 
 
-## 헤더 분류
+## 분류
 
 1. General 헤더 : 
     * 메시지 전체에 적용되는 정보 (Connection: Close)   
@@ -29,7 +33,7 @@ field-name : field-value
     * 기존에는 Entity 헤더라는 명칭이었으나, 2014년 표준에 의해 이름이 변경되었다.   
     * **Representation(엔티티 바디)의 정보(Content-Type:text/html, Conent-Length:3423)**   
    
-### HTTP BODY
+# HTTP BODY
 
 ![image](https://user-images.githubusercontent.com/50267433/146711357-b58d4075-dad2-451e-af0b-3d622007a2cc.png)
 
