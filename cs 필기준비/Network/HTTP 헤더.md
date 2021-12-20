@@ -26,15 +26,16 @@ field-name : field-value
 3. Response 헤더 : 
     * 응답 정보 (Server:Apache)
 4. Representation 헤더(엔티티 헤더) : 
+    * 기존에는 Entity 헤더라는 명칭이었으나, 2014년 표준에 의해 이름이 변경되었다.   
     * **Representation(엔티티 바디)의 정보(Content-Type:text/html, Conent-Length:3423)**   
-
-### HTTP BODY(엔티티 바디) - RFC7230  
+   
+### HTTP BODY
 
 ![image](https://user-images.githubusercontent.com/50267433/146711357-b58d4075-dad2-451e-af0b-3d622007a2cc.png)
 
 * 메시지 본문을 통해 표현 데이터를 전달한다.      
-* 메시지 본문 == 페이로드(payload)     
-* Representation은 요청이나 응답에서 전달할 실제 데이터다.     
+* 메시지 본문 == 페이로드(payload)       
+* Representation은 요청이나 응답에서 전달할 실제 데이터다.(2014년 표준 이전에는 Entity로 명칭)        
 * Representation Header는 Representation 데이터를 해설할 수 있는 정보를 제공한다.    
 * 참고 : 표현 헤더는 표현 메타 데이터와, 페이로드 메시지를 구분해야 하지만, 복잡해져서 이를 생략한다.   
 
