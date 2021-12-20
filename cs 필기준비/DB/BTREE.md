@@ -73,8 +73,15 @@ F, G, H, I, J 가 될 것이고 이는 페이지의 수용범위를 넘어서게
 보조인덱스 범위 찾기 : https://www.youtube.com/watch?v=Prd1Uf7W0hc&list=PLqTUMsvO70nk8WfCyU-IPmc85390CaSqM&index=40&ab_channel=%EA%BF%80%EC%9E%BC%EC%BD%94%EB%94%A9TV  
 ![image](https://user-images.githubusercontent.com/50267433/146734677-cc15da8e-89ec-41e7-8ad7-9ab5354cca4d.png)
 
+  
+실제로는 보조랑 클러스터 인덱스가 같이 있을 것이다.        
+앞서 보조 인덱스는 페이지+순서라했는데 이는 클러스터가 없을때 경우다.      
+사실 이 같은 경우, 만약 데이터가 추가되어서 페이지가 분할되면,      
+보조의 리프 페이지는 값이 불일치 될것이고 이로인해 다시 인덱스를 만드는 과정을 할수있다.     
+그렇기에 보조 인덱스의 리프 페이지의 value는, 찾는 대상의 PK값을 가지게 되고   
+이를 이용해서 다시 클러스터링 인덱스 균형트리의 루트를 타고 검색을 한다.   
 
-실제로는 보조랑 클러스터 인덱스가 같이 있을 것이다.  
+![Uploading image.png…]()
 
 
 ![image](https://user-images.githubusercontent.com/50267433/146735106-eac4bea7-370a-478f-81e1-33ce722c25bd.png)
