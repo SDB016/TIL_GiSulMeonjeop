@@ -79,3 +79,12 @@ field-name : field-value
 * 분할 전송 : Transfer-Encoding: chunked(분할해서 데이터 전송), Content-Length 안됨(분할범위 예상 안되서) 
 * 범위 전송 : Content-Range: bytes 1001-2000 / 2000
 
+# 일반 정보 
+
+* From: 유저 에이전트의 이메일 정보   
+* Referer : 이전 웹 페이지 주소 (자주 사용, `referer: 이전 url`)     
+* User-Agent : 유저 에이전트 애플리케이션 정보    
+* Server : 요청을 처리하는 오리진 서버의 소프트웨어 정보    
+* Date : 메시지가 생성된 날짜    
+
+
