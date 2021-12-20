@@ -23,14 +23,79 @@
 웹 브라우저는 3xx 응답 결과에 Location 헤더가 있으면,   
 Location 위치로 자동으로 요청한다(리다이렉트)     
 
+* 300 Multiple Choices
+* 301 Moved Permanently
+* 302 Found 
+* 303 See Other 
+* 304 Not Modified 
+* 307 Temporary Redirect 
+* 308 Permanent Redirect 
+
+**종류**   
+* 영구 리다이렉션 : 특정 리소스의 URI가 영구적으로 이동 
+    * 예) /members -> /users
+    * 예) /event -> /new-event 
+* 일시 리다이렉션 : 일시적인 변경 
+    * 예) 주문 완료 후 주문 내역 화면으로 이동 
+    * RPG: Post/Redirect/Get  
+* 특수 리다이렉션 
+    * 결과 대신 캐시를 사용  
+
+### 영구 리다이렉션 
+
+* 리소스의 URI가 영구적으로 이동한다.  
+* 원래의 URL을 사용하지 않고, 검색 엔진 등에서도 변경이 인지된다.   
+  
+**코드**
+* 301 Moved Permanently
+    * 리다이렉트시 요청 메서드가 GET으로 변하고, 본문(body)이 제거될 수 있다.(May)   
+* 308 Permananet Redirect 
+    * 301과 같은 기능이다.  
+    * 리다이렉트시 요청 메서드와 본문을 유지한다.(처음 POST를 보내면 리다이렉트도 POST)      
+
+### 일시적 리다이렉션 
+
+* 리소스의 URI가 일시적으로 변경된다.   
+* 따라서 검색 엔진 등에서 URL을 변경하면 안된다.   
+  
+**코드**   
+* 302 Found
+    * 리다이렉트시 요청 메서드가 Get으로 변할 수 있다, 본문이 제거될 수 있다.(MAY) 
+* 307 Temporary Redirect 
+    * 302와 기능은 같다.  
+    * 리다이렉트시 요청 메서드와 본문을 유지한다.(요청 메서드를 변경하면 안된다.MUST NOT)        
+* 303 See Other 
+    * 302와 가능은 같다.  
+    * 리다이렉트시 요청 메서드가 무조건 Get으로 변한다.   
+
+처음 302 스펙의 의도는 HTTP 메서드를 유지하는 것이었다.      
+그런데 웹 브라우저들이 Get으로 바꾸었던 거이었다.        
+그래서 모호한 302를 대신하는 명확한 307, 303이 등장했던 것이다.   
+
+307, 303을 권장하지만 실제 개발에서는 이미 많은 라이브러리가 302를 기본값으로 사용한다.     
+자동 리다이렉션시에 GET으로 변해도 되면 그냥 302를 사용해도 큰 문제는 없다.   
+#### RPG: Post/Redirect/Get 
+ 
+POST로 주문후에 웹 브라우저를 새로고침하면 새로고침을 다시 요청한다.        
+즉, 중복 주문이 될 수 있는데 이를 해결하기 위해 POST후에 Get을 호출하는 일시적 리다이렉션을 사용한다.  
+
+* POST로 주문후에 새로 고침으로 인한 중복 주문 방지  
+* POST로 주문후에 주문 결과 화면을 GET 메서드로 리다이렉트    
+* 새로고침해도 결과 화면을 GET으로 조회한다.      
+* 중복 주문 대신에 결과 화면만 GET으로 다시 요청한다. 
+
+### 기타 리다이렉션   
 * 300 Multiple Choices : 
-* 301 Moved Permanently : 
-* 302 Found : 
-* 303 See Other :
-* 304 Not Modified :
-* 307 Temporary Redirect :
-* 308 Permanent Redirect :
+    * 안쓴다.  
+* 304 Not Modified
+    * 캐시를 목적으로 사용한다.(etag)  
+    * 클라이언트에게 리소스가 수정되지 않았음을 알려준다.   
+    * 따라서 클라이언트는 로컬 PC 저장된 캐시를 재사용한다.(캐시로 리다이렉트)  
+    * 304 응답은 응답에 메시지 바디를 포함하면 안된다.(로컬 캐시를 사용해야하므로)   
+    * 조건부 GET, HEAR 요청시 사용한다.     
 
 
-## 4xx(Client Error)
+## 4xx(Client Error)   
+
+
 ## 5xx(Server Error) 
