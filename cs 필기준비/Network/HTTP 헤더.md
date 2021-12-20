@@ -9,7 +9,7 @@ START 라인
   
 **헤더 구조**
 ```  
-filed-name : field-value      
+field-name : field-value      
 // field-name 은 대소문자 구분이 없다.(field-value는 있다.)   
 ```
  
@@ -17,20 +17,18 @@ filed-name : field-value
 * 표준 헤더들도 존재하는데 그 수가 상당하며 필요시 임의의 헤더를 추가할 수 있다.        
 
 
-**헤더 분류** 
+## 헤더 분류
 
-1. General 헤더 : 메시지 전체에 적용되는 정보 (Connection: Close)   
-2. Request 헤더 : 요청 정보 (User-Agent: Mozilla/5.0)  
-3. Response 헤더 : 응답 정보 (Server:Apache)
-4. Representation 헤더(엔티티 헤더) : Representation(엔티티 바디)의 정보(Content-Type:text/html, Conent-Length:3423)   
+1. General 헤더 : 
+    * 메시지 전체에 적용되는 정보 (Connection: Close)   
+2. Request 헤더 : 
+    * 요청 정보 (User-Agent: Mozilla/5.0)  
+3. Response 헤더 : 
+    * 응답 정보 (Server:Apache)
+4. Representation 헤더(엔티티 헤더) : 
+    * **Representation(엔티티 바디)의 정보(Content-Type:text/html, Conent-Length:3423)**   
 
-전체 
-
-2.
-
-
-
-## HTTP BODY(RFC7230)  
+### HTTP BODY(엔티티 바디) - RFC7230  
 
 * 메시지 본문을 통해 표현 데이터를 전달한다.   
 * 메시지 본문 == 페이로드(payload)   
@@ -39,6 +37,3 @@ filed-name : field-value
     * 데이터 유형, 데이터 길이, 압축 정보 등등 
 * 참고 : 표현 헤더는 표현 메타 데이터와, 페이로드 메시지를 구분해야하지만, 
 
-
-
-****
