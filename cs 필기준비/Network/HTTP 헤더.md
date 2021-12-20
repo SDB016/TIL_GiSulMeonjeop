@@ -42,8 +42,9 @@ field-name : field-value
 * Representation은 요청이나 응답에서 전달할 실제 데이터다.(2014년 표준 이전에는 Entity로 명칭)        
 * Representation Header는 Representation 데이터를 해설할 수 있는 정보를 제공한다.    
 * 참고 : 표현 헤더는 표현 메타 데이터와, 페이로드 메시지를 구분해야 하지만, 복잡해서 이를 생략한다.   
-
-# Representation(표현)  
+  
+# 표현(Representation)  
+> 요청/응답시 바디 데이터에 대한 메타 정보    
     
 * Content-Type : 표현 데이터의 형식      
 * Content-Encoding : 표현 데이터의 압축 방식       
