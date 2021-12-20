@@ -93,3 +93,9 @@ field-name : field-value
 * Location : 페이지 리다이렉션   
 * Allow : 허용 가능한 HTTP 메서드    
 * Retry-After : 유저 에이전트가 다음 요청을 하기까지 기다려야 하는 시간    
+
+# 인증 
+ 
+* Authorization : 클라언트 인증 정보를 서버에 전달    
+* WWW-AUthenticate : 리소스 접근시 필요한 인증 방법 정의     
+
