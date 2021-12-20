@@ -30,7 +30,7 @@ field-name : field-value
 
 ### HTTP BODY(엔티티 바디) - RFC7230  
 
-![image](https://user-images.githubusercontent.com/50267433/146711317-abe09d12-086d-45b7-b075-cbc4999af5c3.png)
+![image](https://user-images.githubusercontent.com/50267433/146711357-b58d4075-dad2-451e-af0b-3d622007a2cc.png)
 
 * 메시지 본문을 통해 표현 데이터를 전달한다.      
 * 메시지 본문 == 페이로드(payload)     
