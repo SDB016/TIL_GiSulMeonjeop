@@ -15,9 +15,9 @@ REST API는 REST 제약 조건의 집합을 모두 지킨 API를 의미한다.
 * client-server
 * stateless 
 * cache 
-* **uniform interface**  
 * layer system
 * code-on-demand(optional)    
+* **uniform interface**  
 
 ### Client-Server 
    
