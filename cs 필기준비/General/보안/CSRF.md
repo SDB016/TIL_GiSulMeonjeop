@@ -33,11 +33,9 @@ CSRF는 기본적으로 **권한을 탈취하는 해킹 기법이 아니다.**
 4. 또한, 요청시 전달되는 토큰값과 서버에 저장된 실제값을 비교하고 일치하지 않으면 실패 처리한다.     
 
 ## Rest api에서의 CSRF(disable 이유)    
-그래서 이렇게 보안 수준을 향상시키는 CSRF를 왜 disable 하였을까?   
-spring security documentation에 non-browser clients 만을 위한 서비스라면 csrf를 disable 하여도 좋다고 한다.    
-   
-이 이유는 rest api를 이용한 서버라면,    
-session 기반 인증과는 다르게 stateless하기 때문에 서버에 인증정보를 보관하지 않는다.    
-rest api에서 client는 권한이 필요한 요청을 하기 위해서는 요청에 필요한 인증 정보를(OAuth2, jwt토큰 등)을 포함시켜야 한다.   
-따라서 서버에 인증정보를 저장하지 않기 때문에 굳이 불필요한 csrf 코드들을 작성할 필요가 없다.   
   
+Spring Security가 non-browser clients 만을 위한 서비스라면 csrf를 disable 하여도 좋다고 한다.(레퍼런스왈)   
+         
+RestAPI 로만 이루어진 서버라면, Stateless한 서버이기 때문에 별도의 인증 정보를 보관하지 않아야한다.                
+이러한 특징을 더 살리기 위해서, OAuth2, jwt토큰과 같은 필요한 인증 정보를 포함시켜서 전송하는 방식을 권장하고 있다.            
+즉, 매 파라미터에 CSRF 토큰을 전송하는 불편한 코드는 더이상상요하지 않아도 된다는 것이다.(어차피 헤더에 다른 토큰으로 인증처리함)         
