@@ -229,48 +229,37 @@ Link: </article/1>; rel="previous"
 * **하이퍼링크 + self-descriptive를 처리할 수 없다.**              
 * JSON 문법은 정의되어있으나 내부 Key를 해석할수 없어 불완전하다.           
 * 이를 해결하기 위해서 결국 API 문서를 만들어야 했다.     
-
-## 예시   
-### HTML   
+ 
+## REST API 어려운 이유 예시(HTML VS JSON)
+  
 ![image](https://user-images.githubusercontent.com/50267433/146887929-8643e992-78b9-44a1-a9b7-ab2f8d7f61da.png)
-   
-HTML은 완벽히 해석 가능한가? 가능하다. / HATEOAS도 가능하다(전이 가능)     
+
+### HTML      
+> HTML은 메시지에 대한 완벽한 해석이 가능하며, 상태 전이도 가능하다.     
+ 
+![image](https://user-images.githubusercontent.com/50267433/146887974-68889726-ced6-400e-b599-0382f447cbdd.png)
+ 
+* HTML은 태그를 이용해서 요소에 대한 해석 + 상태 전이를 표현할 수 있다.      
+ 
+___  
 
 ### JSON   
-  
-![image](https://user-images.githubusercontent.com/50267433/146887974-68889726-ced6-400e-b599-0382f447cbdd.png)
-   
-JSON은 온전한 해석이 가능하지 않다.(객체 키들의 뜻은) / HATEOAS도 전이가 불가능하다.   
-
+> JSON은 메시지에 대한 완벽한 해석이 가능하지 않으며 일반적인 방법으로는 상태 전이도 불가능하다.      
+ 
 ![image](https://user-images.githubusercontent.com/50267433/146888083-c83624c5-3fbe-46ff-ac68-de55ab150188.png)
 
-# REST API로 고쳐보다  
-## SELF-DESCRIPTIVE 
-### 
-![image](https://user-images.githubusercontent.com/50267433/146888818-f2e3615f-fcb2-438e-ae2b-61a1c5ab9eb3.png)
+* JSON은 대부분의 요소들에 대해서 해석이 가능하나 정작 JSON 요소들에 대해서 표준이 아닌 이상 해석이 힘들다.        
+* 또한 일반적인 경우, 상태 전이 즉, HATEOAS 를 지원하기 힘들다.    
 
-![image](https://user-images.githubusercontent.com/50267433/146888786-04ef325f-89e5-4d18-b45b-3c1accc8a937.png)
+____
 
-### 
-
-![image](https://user-images.githubusercontent.com/50267433/146888874-44fab28d-a7f4-4999-859a-6d66e0018cae.png)
-![image](https://user-images.githubusercontent.com/50267433/146888919-e6f3db18-2542-4e71-b51a-a17d9473ead1.png)
-
-## HATEOAS
-### 
-
-![image](https://user-images.githubusercontent.com/50267433/146888969-6a6139f4-9d02-4da2-955c-da529011a77c.png)
-
-### data로 
-![image](https://user-images.githubusercontent.com/50267433/146889041-8f8d41f2-5e14-420b-af1e-ec9c2cb1c0c8.png)
-
-### data로2
-
-![image](https://user-images.githubusercontent.com/50267433/146889118-839a2d5d-5ea0-40b1-a7cb-4d8ad3ac7ead.png)
-
-### HTTP 헤더로  
-![image](https://user-images.githubusercontent.com/50267433/146889184-3f1ef60c-d416-4af0-ae5e-e024c53879e1.png)
-
+## REST API로 고쳐보자  
+### SELF-DESCRIPTIVE 
+ 
+* 커스텀 미디어타입을 도입한다.    
+* Link 헤더를 도입하여 profile 명세서를 제공한다.    
+ 
+### HATEOAS  
 
 결국에는 HATEOAS 같은경우 data, 헤더를 이용해서 모두 표현가능하다.   
 
@@ -299,4 +288,21 @@ JSON은 온전한 해석이 가능하지 않다.(객체 키들의 뜻은) / HATE
 ![image](https://user-images.githubusercontent.com/50267433/146889441-4499c36e-c04f-4bff-aeed-c9df0ed19c37.png)
    
 마지막 문구는 현재 RestFul이라고 부른다.   
+
+# ![image](https://user-images.githubusercontent.com/50267433/146888874-44fab28d-a7f4-4999-859a-6d66e0018cae.png)
+![image](https://user-images.githubusercontent.com/50267433/146888919-e6f3db18-2542-4e71-b51a-a17d9473ead1.png)
+
+### HATEOAS
+
+![image](https://user-images.githubusercontent.com/50267433/146888969-6a6139f4-9d02-4da2-955c-da529011a77c.png)
+
+#### data1
+![image](https://user-images.githubusercontent.com/50267433/146889041-8f8d41f2-5e14-420b-af1e-ec9c2cb1c0c8.png)
+
+#### data로2
+
+![image](https://user-images.githubusercontent.com/50267433/146889118-839a2d5d-5ea0-40b1-a7cb-4d8ad3ac7ead.png)
+
+#### HTTP 헤더  
+![image](https://user-images.githubusercontent.com/50267433/146889184-3f1ef60c-d416-4af0-ae5e-e024c53879e1.png)
 
