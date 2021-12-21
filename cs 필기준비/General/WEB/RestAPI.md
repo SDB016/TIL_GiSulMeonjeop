@@ -66,38 +66,88 @@ REST API는 REST 제약 조건의 집합을 모두 지킨 API를 의미한다.
 3. 자기 서술적 메시지           
 4. 애플리케이션 상태에 대한 엔진으로서의 하이퍼미디어               
     
-    
 ## 자원 식별           
 
-```url
+```http
 http://localhost:8080/resource/1
 ```
 
 * 리소스를 통해서 자원을 식별할 수 있어야한다.    
 * 웹 기반의 REST에서 리소스 접근을 주로 URI를 사용한다.            
 
-     
 ## 메시지를 통한 리소스 조작       
-클라이언트가 특정 메시지나 메타데이터를 가지고 있으면 자원을 수정, 삭제하는 충분한 정보를 갖고 있는 것으로 볼 수 있습니다.       
-
-```
+  
+```http  
 http://localhost:8080/resource/1
 content-type: application/json    
 ```   
-예를 들어 코드에서 ```content-type``` 은 리소스가 어떤 형식인지 지정합니다.    
+
+* 클라이언트가 특정 메시지나 메타데이터를 가지고 있으면 자원을 수정, 삭제하는 충분한 정보를 갖고 있는 것으로 볼 수 있다.       
+
+예를 들어 코드에서 `content-type` 은 리소스가 어떤 형식인지 지정합니다.    
 리소스는 HTML, XML, JSON 등 다양한 형식으로 전송됩니다.     
             
-## 자기 서술적 메시지    
-각 메시지는 자신을 어떻게 처리해야 하는지 충분한 정보를 포함해야 합니다.     
-웹 기반의 REST에서는 HTPP Method 와 Header 를 활용합니다.       
-
-```
-GET http://localhost:8080/resource/1     
-content-type: application/json    
-```   
-예를 들어 GET 메서드를 활용하여 ```/resource/1```의 정보를 받아온다는 것을 표현했습니다.     
+## 자기 서술적 메시지      
+   
+HTTP 메시지는 자신의 모든 요소에 대해서 완벽히 해석되어야한다.      
     
-___    
+```http  
+http://localhost:8080/resource/1
+
+{
+    id: 1,
+    data: {
+        name: 'wooji'
+    }
+}
+```
+* 목적지 Host가 빠져있다.         
+
+```http
+http://localhost:8080/resource/1  
+Host: localhost:8080     
+
+{
+    id: 1,
+    data: {
+        name: 'wooji'
+    }
+}
+```   
+
+* 어떤 문법으로 작성되었는지 모른다.   
+
+```http
+http://localhost:8080/resource/1  
+Host: localhost:8080     
+Content-Type: application/json
+
+{
+    id: 1,
+    data: {
+        name: 'wooji'
+    }
+}
+```  
+* id, data, name이 무엇을 의미하는지 모른다.    
+
+```http
+http://localhost:8080/resource/1  
+Host: localhost:8080     
+Content-Type: application/json-my-json
+
+{
+    id: 1,
+    data: {
+        name: 'wooji'
+    }
+}
+```
+* application/json-my-json 이라는 미디어타입을 IANA에 등록한다.       
+* 등록하면서, id, data, name이 무엇인지 설명을 명세한다.             
+* 사용자는 해당 명세서(문서)를 통해서 어떤 의미인지 이해할 수 있다.    
+
+이로서 모든 요소에 대해서 설명이 가능해졌다.   
     
 ## HATEOAS     
 애플리케이션 상태에 대한 엔진으로서의 **하이퍼미디어**         
