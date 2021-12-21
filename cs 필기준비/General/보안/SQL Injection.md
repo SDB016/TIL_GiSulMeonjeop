@@ -22,10 +22,11 @@ Union 키워드를 사용하여 원하는 쿼리문을 실행할 수 있게 하�
 2. 데이터 형이 같아야 합니다.    
 
 # 방지 
+## PreparedStatement   
 
-## PreparedStatement
+
  
-## JPA는?    
+## Spring Data JPA는?    
 
 JPA는 
 JPA는 내부 구현이 PreparedStatement 로 되어있다.   
