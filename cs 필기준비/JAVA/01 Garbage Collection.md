@@ -1,4 +1,4 @@
-Java Memory Garbage Collection
+Garbage Collection
 =================================
      
 1. 새로 생성된 인스턴스들은 힙 영역의 new Generation 의 eden 영역에 배치된다.            
