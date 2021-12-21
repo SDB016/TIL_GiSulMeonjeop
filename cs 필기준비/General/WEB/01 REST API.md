@@ -211,22 +211,33 @@ Link: </article/1>; rel="previous"
 
 # REST API가 어려운 이유 
 
-# 일단 왜 API는 REST가 잘 안되나(일반적인 웹과 비교해보자)   
-
-![image](https://user-images.githubusercontent.com/50267433/146887581-c51e032d-de0c-40d6-be67-2f6988e75790.png)
-  
+||흔한 웹 페이지|HTTP API|
+|-|----------|--------|  
+|Protocol|HTTP|HTTP| 
+|커뮤니케이션|사람-기계|기계-기계|   
+|Media Type|HTML|JSON|  
+   
 * 웹페이지는 사람이 보고, 이를 위해 HTML로 이루어져있다.   
 * HTTP API는 기계가 보고, 이를 속도 + 쉽게 처리하기 위해 JSON을 사용한다.    
-  
-![image](https://user-images.githubusercontent.com/50267433/146887697-e00c5c09-58d1-4b52-be5c-3c0e6a02f0ad.png)
-  
-* 하이퍼링크 + self-descriptive를 처리할 수 없다.     
-* 문법은 정의되어있으나 그자체 의믜를 해석이 가능한게 없어서 불완전하다(문버 해석가능, 문법 의미 해석 불가능)   
-* 이를 해결하기 위해서 우리는 API 문서를 만들었다.   
 
+
+||HTML|JSON|
+|-|----------|--------|  
+|Hyperlink|됨(a 태그등)|정의되어있지 않음|   
+|Self-descriptive|됨(HTML 명세)|불완전*|     
+         
+* **하이퍼링크 + self-descriptive를 처리할 수 없다.**              
+* JSON 문법은 정의되어있으나 내부 Key를 해석할수 없어 불완전하다.           
+* 이를 해결하기 위해서 결국 API 문서를 만들어야 했다.     
+
+## 예시   
+### HTML   
 ![image](https://user-images.githubusercontent.com/50267433/146887929-8643e992-78b9-44a1-a9b7-ab2f8d7f61da.png)
    
 HTML은 완벽히 해석 가능한가? 가능하다. / HATEOAS도 가능하다(전이 가능)     
+
+### JSON   
+  
 ![image](https://user-images.githubusercontent.com/50267433/146887974-68889726-ced6-400e-b599-0382f447cbdd.png)
    
 JSON은 온전한 해석이 가능하지 않다.(객체 키들의 뜻은) / HATEOAS도 전이가 불가능하다.   
