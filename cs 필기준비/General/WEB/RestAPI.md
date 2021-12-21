@@ -152,8 +152,12 @@ Content-Type: application/json-my-json
 * 사용자는 해당 명세서(문서)를 통해서 어떤 의미인지 이해할 수 있다.    
 
 이로서 모든 요소에 대해서 설명이 가능해졌다.   
-   
-**Self-descriptive messgae를 무조건 지켜야하는가?**
+
+**IANA에 등록하는 것은 필수인가?**   
+* 아니다. 하지만 아래와 같은 장점을 가지고 있다.   
+* 누구나 쉽게 사용할 수 있다.   
+* 이름 충돌을 피할 수 있다.    
+* 등록이 별로 어렵지 않다.   
 
 ## Hypermedia as the engine of application state(HATEOAS)   
 애플리케이션 상태에 대한 엔진으로서의 **하이퍼미디어**         
