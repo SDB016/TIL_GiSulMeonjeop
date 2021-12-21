@@ -261,48 +261,27 @@ ____
  
 ### HATEOAS  
 
-결국에는 HATEOAS 같은경우 data, 헤더를 이용해서 모두 표현가능하다.   
+* JSON 내부에 **Key : URI**을 이용하여 하이퍼링크를 남긴다.            
+* Key의 네이밍을 복수형으로 선언하여 여러 하이퍼링크를 남겨줄 수 있다.        
+* 당연하게도, 커스텀 미디어 타입을 이용해서 Key의 네이밍을 자유롭지만 표현 가능하게 할 수 있다.    
+* Link 헤더를 도입하여 바로 다음 하이퍼 링크를 제공해줄수 있다.  
+* 결국에는 HATEOAS 같은경우 data, 헤더를 이용해서 모두 표현 가능하다.     
+  
+# 질문 
 
-![image](https://user-images.githubusercontent.com/50267433/146889236-372fecf3-cc3d-467e-a455-472af622da6d.png)
-
-상관없다.  
-
-![image](https://user-images.githubusercontent.com/50267433/146889277-e58ea19e-7951-4093-8ec1-1b4fc065384f.png)
-
-사내에서 사용한다던가, 사용자들이 모두 알고 있으면 굳이 안해도 된다.  
-
-![image](https://user-images.githubusercontent.com/50267433/146889358-a6c7e421-3666-4009-afb9-e667248d732c.png)
-
-그러나 위와 같은 장점으로 하는게 좋다.  
-
-
- 
-## 우리가 만드는 API는 꼭 REST API를 사용해야 하는가?      
-> 아니다. 
-   
-시스템 전체를 통제할 수 있다고 생각하거나 진화에 관심없다면, REST에 대해 따지느라 시간 낭비하지마라   
-즉, 클라이언트 개발자를 내가 컨트롤하거나, API를 독단적으로 개발할 수 있어 맘대로 변경 가능한 경우는 상관없다.     
+* 하이퍼링크는 꼭 URI여야 하는가? : 상관없다, 
+* INAN은 등록되어야하는가? : 사내에서 사용한다던가, 사용자들이 모두 알고 있으면 굳이 안해도 된다. 그러나 장점으로 하는게 좋다.  
+* 우리가 만드는 API는 꼭 REST API를 사용해야 하는가? : 시스템 전체를 통제할 수 있다고 생각하거나 진화에 관심없다면, REST에 대해 따지느라 시간 낭비하지마라   
+     * 즉, 클라이언트 개발자를 내가 컨트롤하거나, API를 독단적으로 개발할 수 있어 맘대로 변경 가능한 경우는 상관없다.     
 
 # 정리 
-
-![image](https://user-images.githubusercontent.com/50267433/146889441-4499c36e-c04f-4bff-aeed-c9df0ed19c37.png)
-   
-마지막 문구는 현재 RestFul이라고 부른다.   
-
-# ![image](https://user-images.githubusercontent.com/50267433/146888874-44fab28d-a7f4-4999-859a-6d66e0018cae.png)
-![image](https://user-images.githubusercontent.com/50267433/146888919-e6f3db18-2542-4e71-b51a-a17d9473ead1.png)
-
-### HATEOAS
-
-![image](https://user-images.githubusercontent.com/50267433/146888969-6a6139f4-9d02-4da2-955c-da529011a77c.png)
-
-#### data1
-![image](https://user-images.githubusercontent.com/50267433/146889041-8f8d41f2-5e14-420b-af1e-ec9c2cb1c0c8.png)
-
-#### data로2
-
-![image](https://user-images.githubusercontent.com/50267433/146889118-839a2d5d-5ea0-40b1-a7cb-4d8ad3ac7ead.png)
-
-#### HTTP 헤더  
-![image](https://user-images.githubusercontent.com/50267433/146889184-3f1ef60c-d416-4af0-ae5e-e024c53879e1.png)
-
+* 오늘날 대부분의 REST API는 REST 아키텍처를 지키지 않고 있다.      
+* REST 제약조건 중에서 특히 Self-descriptive 랑 HATEOAS를 지키지 않고 있다.     
+* REST는 긴 시간에 걸쳐 진화하는 웹 애플리케이션을 위한 것이다.     
+* REST를 따를 것인지는 API를 설계하는 이들이 스스로 판단하여 결정해야 한다.      
+* REST를 따르겠다면, Self-descriptive와 HATEOAS를 만족시켜야한다.     
+    * Self-descriptive 는 custom media type이나 profile link relation 등으로 만족시킬 수 있다.  
+    * HATEOAS는 HTTP 헤더나 본문에 링크를 담아 만족시킬 수 있다.    
+* REST를 따르지 않겠다면, REST를 만족하지 않는 REST API를 뭐라고 부를지 결정해야할 것이다.        
+    * HTTP API라고 부를수도 있고     
+    * 그냥 이대로 REST API라고 부를수도 있다.     
