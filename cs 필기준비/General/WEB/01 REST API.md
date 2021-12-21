@@ -150,10 +150,8 @@ Content-Type: application/json-my-json
 * application/json-my-json 이라는 미디어타입을 IANA에 등록한다.       
 * 등록하면서, id, data, name이 무엇인지 설명을 명세한다.             
 * 사용자는 해당 명세서(문서)를 통해서 어떤 의미인지 이해할 수 있다.    
-
-이로서 모든 요소에 대해서 설명이 가능해졌다.   
-
-**IANA에 등록하는 것은 필수인가?**   
+  
+**IANA에 등록하는 것은 필수인가? 🤔**     
 * 아니다. 하지만 아래와 같은 장점을 가지고 있다.   
 * 누구나 쉽게 사용할 수 있다.   
 * 이름 충돌을 피할 수 있다.    
@@ -193,17 +191,26 @@ Link: </article/1>; rel="previous"
 * JSON은 Link 헤더를 이용해 표현할 수 있다.    
 * 또는 JSON 데이터에 다음 링크를 남겨둘 수 있다.    
 
-
 **HATEOAS 작업을 하면 얻게되는 이점**                   
 * 클라이언트는 관련된 특정 동작에 따라 탐색할 만한 URI 값을 알 수 있다.                     
   URI는 resource 까지 포함하므로 더 명확하게 예측이 가능하다.                            
 * 키 값이 변하지 않는 한 URI가 변경되더라도 동적으로 사용할 수 있다.                
   따라서 서버쪽 코드가 변하더라도 클라이언트 코드를 따로 수정할 필요가 없다.            
 
-# 원격 API가 꼭 Rest API여야 하는가?      
-아니다, 단 시스템 전체를 통제할 수 있다고 생각하거나(클라이언트개발자를 내가 조종가능, API맘대로 변경가능)      
-진화에 관심없다면, REST에 대해 따지느라 시간 낭비하지마라  
+## Self-descriptive과 HATEOAS의 독립적 진화   
    
+**Self-descriptive**       
+* 확장 가능한 커뮤니케이션      
+* 서버나 클라이언트가 변경되더라도  오고가는 메시지는 언제나 self-descriptive 하므로 언제나 해석 가능하다.    
+   
+**HATEOAS**      
+* 애플리케이션 상태 전이의 late binding        
+* 어디서 어디로 전이가 가능한지 미리 결정되지 않는다.         
+* 어떤 상태로 전이가 완료되고 나서야 그 다음 전이 될 수 있는 상태가 결정된다.           
+* 쉽게 말해서 링크는 동적으로 변경될 수 있다.(클라이언트가 수정안해도 값 받아서 연결)    
+
+# REST API가 어려운 이유 
+
 # 일단 왜 API는 REST가 잘 안되나(일반적인 웹과 비교해보자)   
 
 ![image](https://user-images.githubusercontent.com/50267433/146887581-c51e032d-de0c-40d6-be67-2f6988e75790.png)
@@ -211,8 +218,6 @@ Link: </article/1>; rel="previous"
 * 웹페이지는 사람이 보고, 이를 위해 HTML로 이루어져있다.   
 * HTTP API는 기계가 보고, 이를 속도 + 쉽게 처리하기 위해 JSON을 사용한다.    
   
-아 문제는 JSON이였구나..  
-
 ![image](https://user-images.githubusercontent.com/50267433/146887697-e00c5c09-58d1-4b52-be5c-3c0e6a02f0ad.png)
   
 * 하이퍼링크 + self-descriptive를 처리할 수 없다.     
@@ -227,18 +232,6 @@ HTML은 완벽히 해석 가능한가? 가능하다. / HATEOAS도 가능하다(�
 JSON은 온전한 해석이 가능하지 않다.(객체 키들의 뜻은) / HATEOAS도 전이가 불가능하다.   
 
 ![image](https://user-images.githubusercontent.com/50267433/146888083-c83624c5-3fbe-46ff-ac68-de55ab150188.png)
-
-# 그런데 Self-descriptive과 HATEOAS가 독립적 진화에 어떻게 도움이될까?   
-  
-**Self-descriptive**       
-* 확장 가능한 커뮤니케이션      
-* 서버나 클라이언트가 변경되더라도  오고가는 메시지는 언제나 self-descriptive 하므로 언제나 해석가능하다.    
- 
-**HATEOAS**    
-* 애플리케이션 상태 전이의 late binding       
-* 어디서 어디로 전이가 가능한지 미리 결정되지 않는다.       
-* 어떤 상태로 전이가 완료되고 나서야 그 다음 전이 될 수 있는 상태가 결정된다.         
-* 쉽게 말해서 링크는 동적으로 변경될 수 있다.(클라이언트가 수정안해도 값 받아서 연결)  
 
 # REST API로 고쳐보다  
 ## SELF-DESCRIPTIVE 
@@ -282,10 +275,17 @@ JSON은 온전한 해석이 가능하지 않다.(객체 키들의 뜻은) / HATE
 
 그러나 위와 같은 장점으로 하는게 좋다.  
 
+
+ 
+## 우리가 만드는 API는 꼭 REST API를 사용해야 하는가?      
+> 아니다. 
+   
+시스템 전체를 통제할 수 있다고 생각하거나 진화에 관심없다면, REST에 대해 따지느라 시간 낭비하지마라   
+즉, 클라이언트 개발자를 내가 컨트롤하거나, API를 독단적으로 개발할 수 있어 맘대로 변경 가능한 경우는 상관없다.     
+
 # 정리 
 
 ![image](https://user-images.githubusercontent.com/50267433/146889441-4499c36e-c04f-4bff-aeed-c9df0ed19c37.png)
    
 마지막 문구는 현재 RestFul이라고 부른다.   
 
- 
