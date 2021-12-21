@@ -22,6 +22,167 @@
 ## code-on-demand  
 서버에서 코드를 보내면 클라이언트에서 바로 실행가능해야한다(HATEOS)  
 
+
+* selef-descriptive messages   
+    * 메시지는 스스로 설명해야한다.  
+    * ![image](https://user-images.githubusercontent.com/50267433/146884353-c657795f-8331-45e6-91e2-ca98716d94f8.png)
+    * 목적지가 빠져있었다. 
+    * ![image](https://user-images.githubusercontent.com/50267433/146884418-138133b8-9290-457a-ac90-2d8d16264720.png)
+    * ![image](https://user-images.githubusercontent.com/50267433/146884471-8e8b4987-149b-4238-a36f-1e5f467dbca5.png)
+    * 이게 어떤 문법으로 작성되었는지 모른다.   
+    * ![image](https://user-images.githubusercontent.com/50267433/146884501-ce74a85a-32bd-4792-ae00-e0dd3fd7de4d.png) 
+    * ![image](https://user-images.githubusercontent.com/50267433/146884536-77e03541-819e-4e57-9a0c-9bc61af256ef.png)
+    * json-patch-json 의 명세를 기술해서, op와 path가 어떤 의미인지 알게끔한다.    
+    * 모든 요소에 대해서 해석이 가능해야한다.    
+ 
+* hypermedia as the engine of application state(hateoas)  
+    * 애플리케이션의 상태는 Hyperlink를 이용해 전이되어야 한다.  
+    * ![image](https://user-images.githubusercontent.com/50267433/146884796-1ae90e1e-ade8-44f0-ad61-5120d1fd7e2a.png)
+    * 예를들면, HTTP만을 이용해서라도 상태들이 전이될 수 있어야한다.(페이지의 다음링크 존재가 보장되어야한다)     
+    * ![image](https://user-images.githubusercontent.com/50267433/146884907-3fbc966a-4b2a-44f5-a55a-13f9e98d3705.png)
+    * HTML을 반환한다면, 다음 링크를 넘겨줄 수 있어야한다.  
+    * ![image](https://user-images.githubusercontent.com/50267433/146884987-618c0432-2994-49c8-820b-a3735a08cdb1.png)
+    * JSON에서도 Link라는 헤더를 이용하면 된다.  
+    * Link 헤더가 표준으로 문서가 나와있기에 이를 온전히 해석해서 다른 상태로 전이하게끔 한다.  
+  
+그럼 왜 Uniform 인터페이스를 해야하는가?     
+   
+**독립적 진화**      
+* 서버와 클라이언트가 각각 독립적으로 진화한다.       
+* 서버의 기능이 변경되어도 클라이언트를 업데이트할 필요가 없다.      
+* REST를 만들게 된 계기 : HOW DO IMPORVE HTTP WITHOUT BREAKING THE WEB   
+
+# 웹    
+
+* 웹 페이지를 변경했다고 웹 브라우저를 업데이트할 필요가 없다.     
+* 웹 브라우저를 업데이트했다고 웹 페이즈를 변경할 필요도 없다.    
+* HTTP 명세가 변경되어도 웹은 잘 동작한다.        
+* HTML 명세가 변경되어도 웹은 잘 동작한다.     
+* 반응형으로 페이지가 깨질수있지만, 동작은 한다.(기능은 된다는 것)   
+
+   
+# 상호 운용성에 대한 집착  
+* Referer 오타지만 안고침      
+* charset 잘못 지은 이름이지만 안고침  
+* HTTP 상태 코드 416포기함(I'm teapot)    
+* HTTP/0.9 아직도 지원함(크롬, 파이어폭스)  
+ 
+# REST가 웹의 독립적 진화에 도움을 주엇나     
+* HTTP에 지속적으로 영향을 주었다.     
+* Host헤더 추가       
+* 길이 제한을 다루는 방법 명시(414 URI TOO LONG 등)       
+* URI에서 리소스의 정의가 추상적으로 변경되었다.(식별하고자하는 무언가)    
+* 기타 HTTP와 URI에 많은 영향을 줌        
+* HTTP/1.1 명세 최신판에서 REST 에 대한 언급이 들어간다.     
+
+# 그럼 REST는 성공했는가?   
+* REST는 웹의 독립적 진화를 위해 만들어졌다.     
+* 웹은 독립적으로 진화하고 있다.    
+
+# 그런데 REST API는?   
+  
+* REST API는 REST 아키텍처 스타일을 따라야한다.     
+* 오늘날 스스로 REST API라고 하는 API들은 대부분이 REST 아키텍처 스타일을 따르지 않는다.    
+    
+REST API도 제약조건을 다 지켜야하는건가? 응 지켜야됭   
+  
+# 원격 API가 꼭 Rest API여야 하는가?      
+아니다, 단 시스템 전체를 통제할 수 있다고 생각하거나(클라이언트개발자를 내가 조종가능, API맘대로 변경가능)      
+진화에 관심없다면, REST에 대해 따지느라 시간 낭비하지마라  
+
+# 그럼이제 어떻게 할까?  
+* REST API를 구현하고 REST API라고 부른다.   
+* REST API를 구현하지 않고 HTTP API라고 부른다.       
+* REST API가 아니지만 REST API라고 부른다.(현재 상태)  
+  
+그래서 REST API를 만든사람이 이렇게 말한다.     
+제발 제약 조건을 따르던지 아니면 다른 단어를 사용해줘    
+그래서 REST 명세를 완벽히 지킨 API를 RestFul API이다.    
+   
+# 일단 왜 API는 REST가 잘 안되나(일반적인 웹과 비교해보자)   
+
+![image](https://user-images.githubusercontent.com/50267433/146887581-c51e032d-de0c-40d6-be67-2f6988e75790.png)
+  
+* 웹페이지는 사람이 보고, 이를 위해 HTML로 이루어져있다.   
+* HTTP API는 기계가 보고, 이를 속도 + 쉽게 처리하기 위해 JSON을 사용한다.    
+  
+아 문제는 JSON이였구나..  
+
+![image](https://user-images.githubusercontent.com/50267433/146887697-e00c5c09-58d1-4b52-be5c-3c0e6a02f0ad.png)
+  
+* 하이퍼링크 + self-descriptive를 처리할 수 없다.     
+* 문법은 정의되어있으나 그자체 의믜를 해석이 가능한게 없어서 불완전하다(문버 해석가능, 문법 의미 해석 불가능)   
+* 이를 해결하기 위해서 우리는 API 문서를 만들었다.   
+
+![image](https://user-images.githubusercontent.com/50267433/146887929-8643e992-78b9-44a1-a9b7-ab2f8d7f61da.png)
+   
+HTML은 완벽히 해석 가능한가? 가능하다. / HATEOAS도 가능하다(전이 가능)     
+![image](https://user-images.githubusercontent.com/50267433/146887974-68889726-ced6-400e-b599-0382f447cbdd.png)
+   
+JSON은 온전한 해석이 가능하지 않다.(객체 키들의 뜻은) / HATEOAS도 전이가 불가능하다.   
+
+![image](https://user-images.githubusercontent.com/50267433/146888083-c83624c5-3fbe-46ff-ac68-de55ab150188.png)
+
+# 그런데 Self-descriptive과 HATEOAS가 독립적 진화에 어떻게 도움이될까?   
+  
+**Self-descriptive**       
+* 확장 가능한 커뮤니케이션      
+* 서버나 클라이언트가 변경되더라도  오고가는 메시지는 언제나 self-descriptive 하므로 언제나 해석가능하다.    
+ 
+**HATEOAS**    
+* 애플리케이션 상태 전이의 late binding       
+* 어디서 어디로 전이가 가능한지 미리 결정되지 않는다.       
+* 어떤 상태로 전이가 완료되고 나서야 그 다음 전이 될 수 있는 상태가 결정된다.         
+* 쉽게 말해서 링크는 동적으로 변경될 수 있다.(클라이언트가 수정안해도 값 받아서 연결)  
+
+# REST API로 고쳐보다  
+## SELF-DESCRIPTIVE 
+### 
+![image](https://user-images.githubusercontent.com/50267433/146888818-f2e3615f-fcb2-438e-ae2b-61a1c5ab9eb3.png)
+
+![image](https://user-images.githubusercontent.com/50267433/146888786-04ef325f-89e5-4d18-b45b-3c1accc8a937.png)
+
+### 
+
+![image](https://user-images.githubusercontent.com/50267433/146888874-44fab28d-a7f4-4999-859a-6d66e0018cae.png)
+![image](https://user-images.githubusercontent.com/50267433/146888919-e6f3db18-2542-4e71-b51a-a17d9473ead1.png)
+
+## HATEOAS
+### 
+
+![image](https://user-images.githubusercontent.com/50267433/146888969-6a6139f4-9d02-4da2-955c-da529011a77c.png)
+
+### data로 
+![image](https://user-images.githubusercontent.com/50267433/146889041-8f8d41f2-5e14-420b-af1e-ec9c2cb1c0c8.png)
+
+### data로2
+
+![image](https://user-images.githubusercontent.com/50267433/146889118-839a2d5d-5ea0-40b1-a7cb-4d8ad3ac7ead.png)
+
+### HTTP 헤더로  
+![image](https://user-images.githubusercontent.com/50267433/146889184-3f1ef60c-d416-4af0-ae5e-e024c53879e1.png)
+
+
+결국에는 HATEOAS 같은경우 data, 헤더를 이용해서 모두 표현가능하다.   
+
+![image](https://user-images.githubusercontent.com/50267433/146889236-372fecf3-cc3d-467e-a455-472af622da6d.png)
+
+상관없다.  
+
+![image](https://user-images.githubusercontent.com/50267433/146889277-e58ea19e-7951-4093-8ec1-1b4fc065384f.png)
+
+사내에서 사용한다던가, 사용자들이 모두 알고 있으면 굳이 안해도 된다.  
+
+![image](https://user-images.githubusercontent.com/50267433/146889358-a6c7e421-3666-4009-afb9-e667248d732c.png)
+
+그러나 위와 같은 장점으로 하는게 좋다.  
+
+# 정리 
+
+![image](https://user-images.githubusercontent.com/50267433/146889441-4499c36e-c04f-4bff-aeed-c9df0ed19c37.png)
+   
+마지막 문구는 현재 RestFul이라고 부른다.   
+
 07 RESTAPI    
 =======================    
 시대가 변하면서 다양한 브라우저와 모바일 기기가 탄생하고 있다.         
