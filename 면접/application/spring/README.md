@@ -27,7 +27,7 @@
 
 ## AutoConfiguration 작동원리   
 
-* spring-starter 와 같은 라이브러리들은 클래스가 있다.           
+* spring-starter 와 같은 라이브러리들은 각각의 목적에 맞는 클래스들이 정의되어있다.              
 * spring.factories 파일에는 AutoConfiguration 내용에 의해 bean 으로 생성될 클래스들의 이름이 있다.          
 * spring-starter 와 같은 라이브러리들은 사실 해당 라이브러리의 클래스들을 빈으로 등록하는 Cofiguration 클래스로 구성되어있는데    
   spring-configuration-metadata.json 이나 spring-configuration-metadata.properties로 설정된 값을 통해 빈을 등록하고 있다.    
