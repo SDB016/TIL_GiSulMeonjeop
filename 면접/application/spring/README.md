@@ -37,9 +37,17 @@
 ## Bean 등록과정   
 ## 생성자 주입을 사용해야하는 이유    
 
-## IOC
-
-제어의 역전 
+## IOC  
+  
+제어의 역전, 객체를 생성하고 관리하는 스프링 프레임워크에 위임하는 것을 말한다.       
+스프링은 Spring Container(IoC Container)를 이용해서 빈을 관리한다.     
+     
+* BeanFactory     
+    * 단순 빈을 저장하고 조회 하는 용도    
+* ApplicationContext  
+    * BeanFactory 를 상속받고 있다.    
+    * 빈을 저장하는 용도외에도 국제화, 환경변수, 이벤트 처리와 같은 다양한 기능을 제공한다.   
+    * 대부분의 스프링 프로젝트는 ApplicationContext 유형의 Spring Container를 이용한다.
 
 ## DI
 
