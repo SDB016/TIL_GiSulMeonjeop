@@ -206,23 +206,26 @@ String literal로 생성한 값은 Heap 영역 내 "String Constant Pool"에 저
 ## 불변의 단점   
 
 ## 동등성 비교를 위한 작업은? (이퀄스 해시코드 재정의)   
+  
+일반적인 double equal sign(==) 동등성 비교는 `equals()` 를 재정의하면된다.       
+그러나, HashSet, HashMap, HashTable 같은 경우는 `equals()`가 아닌 hashCode를 동등성 비교 기준으로 삼는다.      
+더불어, hashCode의 디폴트 연산값은 객체의 기본값이기 때문에, 논리적 동등성이 확립해도 Hash 자료구조에거 값을 꺼내지 못한다.     
+그렇기 때문에 재정의는 잊지 말자     
 
-VO 클래스 만들때 주로 정의한다.         
-이퀄스를 사용하면, 커스텀한 동등성을 줄 수 있으나     
-HashSet/HashMap 같은 Hash를 이용한 컬렉션 프레임워크에서는 해시코드를 이용해서 동등성판단을 하기에   
-equals랑 hashcode는 같이 재정의하자   
-  
-## 해시맵, 해시테이블 차이
-   
-* HashMap : 주요 메소드에 synchronized 키워드가 없습니다. key, value에 null을 입력할 수 있습니다.  
-* HashTable : 주요 메소드에 synchronized 키워드가 선언, key, value 에 null을 입력할 수 없습니다.  
-* ConcurrentHashMap의 : HashMap을 thread-safe 하도록 만든 클래스가 ConcurrentHashMap입니다.    
-단, key, value 에 null을 입력할 수 없으며 putIfAbsent라는 메소드 가집니다.     
-  
 ## 해시 충돌   
- 
-## HashMap 자료구조는?   
- 
+
+## 해시맵, 해시테이블 차이
+     
+* HashMap : 
+    * 주요 메소드에 synchronized 키워드가 없다. 
+    * key, value에 null을 입력할 수 있다.  
+* HashTable : 
+    * 주요 메소드에 synchronized 키워드가 선언되어 있다.
+    * key, value 에 null을 입력할 수 없다.  
+* ConcurrentHashMap: 
+    * HashMap을 thread-safe 하도록 만든 클래스가 ConcurrentHashMap입니다.    
+    * 단, key, value 에 null을 입력할 수 없으며 putIfAbsent라는 메소드 가집니다.     
+  
 ## String의 인코딩은?   
 UTF-16 -> 이것에 대해서 원인을 찾고자 했는데 못찾았다.     
 Char가 2바이트인 것을 통해 알 수 있다.      
