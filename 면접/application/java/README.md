@@ -161,11 +161,45 @@ String, String 상수풀을 이용해서 더효과적으로 이용하고 있다.
   
 1. 상태를 가지지 않는다.     
 2. 상태를 가져도 불변성을 가진다.     
-3. Volatile, Atomic, Concurrent 라이브러리를 활용한다.  
+3. Lock 이나 버전관리 활용  
+4. Volatile, Atomic, Concurrent 라이브러리를 활용한다.  
 
-## Volatile 설명 
-## Atomic 설명 
-## Concurrent 설명  
+## Volatile 설명   
+```
+public class SharedObject {
+    public volatile int counter = 0; 
+}
+```
+자바는 Heap을 공유하기에 객체가 여러 쓰레드에서 사용될 수 있지만     
+객체내의 리터럴 값에 대해서는 CPU Cache에 저장하고 이를 캐싱하여 사용하는 전략을 사용한다.    
+그렇기 때문에 여러 쓰레드에 대해서 객체의 리터럴 값 불일치 문제가 발생하는데     
+volatile 키워드를 사용하면 CPU Cache가 아닌 메인 메모리에서 데이터를 조회해서 사용한다.   
+
+* long과 double은 64비트여서 2번 이루어지지만 그래도 원자성을 지켜준다.  
+
+## Atomic 설명   
+
+```
+public class AtomicExample {
+    int val;
+    
+    public boolean compareAndSwap(int oldVal, int newVal) {
+        if(val == oldVal) {
+            val = newVal;
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```
+Atomic은 CAS를 기반으로 Cpu Cache 값이 Main Memory 값과 동일한 경우에만 동작하는 방식으로 문제를 해결한다.
+즉, 예상한 값과 현재 값이 일치하는 경우에만 로직을 실행시키고 만약 일치하지 않다면 현재 값을 갱신한다.    
+
+## Concurrent 라이브러리 설명  
+
+Concurrent 라이브러리의 클래스들은 동시성 문제를 해결하기 윈한 요소들로 만들어진 클래스들이다.     
+Lock, Volatile, Atomic을 사용하여 Thread-Safe한 라이버러리들을 지원해준다.       
 
 ## 객체지향프로그래밍이란?  
   
