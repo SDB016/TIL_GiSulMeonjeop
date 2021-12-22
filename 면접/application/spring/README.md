@@ -100,11 +100,28 @@ SpringAOP는 프록시로 이루어져있기에, final 이랑 상속관련 문�
 
 ## 스프링 빈 스코프   
 
-* singletone: 기본 스코프, 스프링 컨테이너의 시작과 종료까지 유지되는 가장 넓은 범위의 스코프이다.
-* prototype: 스프링 컨테이너는 프로토타입 빈의 생성과 의존관계 주입까지만 관여하고 더는 관리하지 않는 매우 짧은 범위의 스코프이다.
-* request: 웹 요청이 들어오고 나갈때 까지 유지되는 스코프이다.
-* session: 웹 세션이 생성되고 종료될 때 까지 유지되는 스코프이다.
-* application: 웹의 서블릿 컨텍스와 같은 범위로 유지되는 스코프이다.
+* singleton (default)
+    * 애플리케이션에서 Bean 등록 시 singleton scope로 등록
+    * Spring IoC 컨테이너 당 한 개의 인스턴스만 생성
+    * 컨테이너가 Bean 가져다 주입할 때 항상 같은 객체 사용
+    * 메모리나 성능 최적화에 유리
+* prototype
+    * 컨테이너에서 Bean 가져다 쓸 때 항상 다른 인스턴스 사용
+    * 모든 요청에서 새로운 객체 생성
+    * gc에 의해 Bean 제거
+* request
+    * Bean 등록 시 하나의 HTTP request 생명주기 안에 단 하나의 Bean만 존재
+    * 각각의 HTTP 요청은 고유 Bean 객체 보유
+    * Spring MVC Web Application에서 사용
+* session
+    * 하나의 HTTP Session 생명주기 안에 단 하나의 Bean만 존재
+    * Spring MVC Web Application에서 사용
+* global session
+    * 하나의 global HTTP Session 생명주기 안에 한 개의 Bean 지정
+    * Spring MVC Web Application에서 사용
+* application
+    * ServletContext 생명주기 안에 한 개의 Bean 지정
+    * Spring MVC Web Application에서 사용
     
 ## 싱글톤안에 프로토타입 객체면?  
    
