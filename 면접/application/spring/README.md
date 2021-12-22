@@ -19,13 +19,20 @@
 * 빈들에 대한 설정을 AutoConfiguration을 이용하여 편리하게 해준다.      
 * Starter 라이브러리들을 제공해주고 버전과 같은 대부분의 dependency를 관리해준다.      
 * Starter 라이브러리를 지원해줘서     
-
-## AutoConfiguration 작동원리   
-
+   
 ## Spring boot stater란?  
    
 특정 목적을 달성하기 위한 의존성들의 그룹으로   
 응용프로그램의 종류에 따라 쉽고 빠르게 개발을 도와줄 수 있는 도구  
+
+## AutoConfiguration 작동원리   
+
+* spring-starter 와 같은 라이브러리들은 클래스가 있다.           
+* spring.factories 파일에는 AutoConfiguration 내용에 의해 bean 으로 생성될 클래스들의 이름이 있다.          
+* spring-starter 와 같은 라이브러리들은 사실 해당 라이브러리의 클래스들을 빈으로 등록하는 Cofiguration 클래스로 구성되어있는데    
+  spring-configuration-metadata.json 이나 spring-configuration-metadata.properties로 설정된 값을 통해 빈을 등록하고 있다.    
+* 그렇기 때문에 우리가 properties 나 json 파일을 덮어씀으로서 손쉬운 환경설정을 지원해줬던 것이다.     
+
 
 ## Bean 등록과정   
 ## 생성자 주입을 사용해야하는 이유    
