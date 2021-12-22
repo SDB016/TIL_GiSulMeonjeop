@@ -28,6 +28,9 @@
 ## 내부 단편화 및 외부 단편화 설명   
 ## Page Fault 흐름 설명   
 ## 페이지 교체 알고리즘   
+  
+# Block VS Non Block VS Sync VS Async  
+
 
 # 이외에도  
 ## 동시성과 병령성 차이 
