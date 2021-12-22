@@ -24,3 +24,8 @@ Aggregate Root는 DDD에서 엔티티마다 Repository를 만드는 경우가 �
 MapStruct란?
 
 DTO - ENTITY간 객체 매핑을 편하게 도와주는 라이브러리이다. 속도가 빠름..!
+
+# 소나큐브 
+또한 분석결과에 따라 (이 부분은 SonarQube 설정으로 조정이 가능할것같다) merge 가 가능/불가능이 조정되어 진다.
+
+SonarQube 분석 중 critical 항목이 없어서 merge 가능한 화면
