@@ -31,7 +31,7 @@
 * spring.factories 파일에는 AutoConfiguration 내용에 의해 bean 으로 생성될 클래스들의 이름이 있다.          
 * spring-starter 와 같은 라이브러리들은 사실 해당 라이브러리의 클래스들을 빈으로 등록하는 Cofiguration 클래스로 구성되어있는데    
   spring-configuration-metadata.json 이나 spring-configuration-metadata.properties로 설정된 값을 통해 빈을 등록하고 있다.    
-* 그렇기 때문에 우리가 properties 나 json 파일을 덮어씀으로서 손쉬운 환경설정을 지원해줬던 것이다.     
+* 즉, 우리가 properties 나 json 파일을 덮어씀으로서 손쉬운 환경설정을 지원해줬던 것이다.     
 
 
 ## Bean 등록과정   
