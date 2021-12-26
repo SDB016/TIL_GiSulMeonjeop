@@ -1,7 +1,6 @@
 
 ![다운로드](https://user-images.githubusercontent.com/50267433/147085701-04b6c975-251a-4e12-a90d-31d754e5d8b3.png)
 
-
 1. 사용자가 웹브라우저에 웹페이지 URL을 입력함.
 2. DNS 서버에 가서 사용자가 입력한 URL 주소 중 domain name 부분을 검색함.
 3. DNS 서버로부터 해당 도메인 네임에 해당하는 IP 주소를 찾아서 사용자가 입력한 URL 정보와 함께 전달함.
