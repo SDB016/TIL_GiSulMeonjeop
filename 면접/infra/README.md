@@ -1,5 +1,20 @@
 # VPC 
 ## 망분리 이유    
+  
+* 망 : 노드들과 이들 노드들을 연결하는 링크들로 구성된 하나의 시스템    
+* 노드 : IP로 식별할 수 있는 대상         
+* 링크 : 물리적 회선         
+     
+즉, 하나의 Subnet을 하나의 망이라고 칭할 수 있겠네요        
+      
+* Region : 국가 / 지역       
+* Availability Zone : 데이터센터       
+    * ap-northeast-2a      
+    * ap-northeast-2b       
+* VPC          
+    * 하나의 Region에 종속       
+    * 다수의 AZ 설정 가능          
+    * VPC IP 대역 내에서 망 구성         
 
 ## AWS Private, Public subnet - VPC 설정 (NAT)
   
