@@ -54,6 +54,14 @@ Bastion 이란, 성 외곽을 보호하기 위해 돌출된 부분으로 적으�
     * 다수의 AZ 설정 가능            
     * VPC IP 대역 내에서 망 구성           
 
+## 장비 
+
+허브 : 전기 신호를 증폭 시켜서 전송거리를 연장시키고, 여러 대의 디바이스를 연결해준다. repeater 와 Flooding 기능을 수행한다. 구조적으로 데이터를 한 번에 하나만 전송할 수 있기 때문에 두 개 이상의 노드가 동일한 시점에 패킷을 보낼때 발생하게 되는 충돌(collision)의 영역인 collision domain 을 공유한다. 결론적으로 허브는 요즘 거의 안쓴다고 한다.
+
+스위치 : 허브의 collision domain 문제를 개선한 장비. 자신에게 연결된 노드들의 MAC 주소 와 포트 정보들을 보관하고 있는 MAC Table 을 가지고 있다. MAC Table 에 정보가 있을때 Forwarding 이 발생하고 MAC Table 에 정보가 없으면 Flooding 이 발생한다. 일반적인 L2 스위치 기준으로 OSI 7 layer 에서 DATA layer 까지만 커버한다. 즉, Broadcast Domain 구분이 불가능하다.
+
+라우터 : 스위치와 마찬가지로 자신에게 연결된 노드들의 MAC 주소 정보들을 보관하고 있는 MAC Table 을 가지고 있다. MAC Table 에 정보가 있을때 Forwarding 이 발생하고 MAC Table 에 정보가 없으면 스위치와 다르게 Drop 이 발생한다. Broadcast Domain 구분이 가능.
+
 ## AWS Private, Public subnet - VPC 설정 (NAT)
   
 VPC내에는 보통 Public Subnet과 Private Subnet으로 구성되어 있다.     
