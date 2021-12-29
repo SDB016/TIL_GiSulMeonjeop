@@ -184,3 +184,31 @@ SpringAOP는 프록시로 이루어져있기에, final 이랑 상속관련 문�
 * 인터셉터는 디스패처서블릿과 핸들러 사이에 위치하여 주로 인가처리에 사용된다.     
 
 ## ApplicationContextAware
+
+```java
+public class SimpleClass implements ApplicationContextAware{
+    
+    @Override
+    public void setApplicationContext(ApplicationContext appCtx) throws BeansException {
+        try {
+            if(appCtx instanceof GenericXmlApplicationContext) {
+                System.out.println( "appCtx is GenericXmlApplicationContext true" );
+                // ApplicationContext 설정 수행
+                ((GenericXmlApplicationContext)appCtx).registerShutdownHook();
+            }
+        } catch (BeansException e) {
+            throw e;
+        }
+    }    
+}
+```
+ApplicationContextAware Interface를 구현하면      
+bean생성 및 property의존성 주입 완료 후 init 메소드 실행전에        
+ApplicationContextAware.setApplicationContext()를 호출해준다.      
+이를 통해 bean은 자신의 인스턴스를 생성관리하는 ApplicationContext가 어떤 인스턴스인지 확인하고 접근할 수 있다.          
+쉽게 말해 bean을 관리하는 ApplicationContext 인스턴스에 직접 접근이 필요한 경우 사용하는 Interface이다.     
+많이 사용되지는 않고 ApplicationContext세부 설정을 XML파일 로딩시점에 특정 bean에 위임하는 경우에 사용   
+
+
+
+출처: https://javaslave.tistory.com/50 [전산쟁이 블로그]
