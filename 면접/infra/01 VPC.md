@@ -1,14 +1,15 @@
 # VPC 
 
-<img width="619" alt="b3c9ac82a4e94f2d95e1db822716408c" src="https://user-images.githubusercontent.com/50267433/147635585-c96df37a-4567-4f36-ab51-3b37814543c3.png">      
+<img width="619" alt="b3c9ac82a4e94f2d95e1db822716408c" src="https://user-images.githubusercontent.com/50267433/147635585-c96df37a-4567-4f36-ab51-3b37814543c3.png">        
+
 * 서브넷 : VPC에 설정한 **네트워크 대역을 더 세부적으로 나눈 네트워크**                
 * 인터넷 게이트웨이 : **VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이**        
 * 라우팅테이블 : **네트워크 트래픽을 전달할 위치를 결정하는 데 사용하는 라우팅이라는 이름의 규칙 집합**     
                
 VPC는 하나의 거대한 가상 내부 네트워크를 의미한다.                  
 외부에 공개된 네트워크가 아니라 사내망과 같이 내부에서 사용될 용도의 네트워크를 만들 수 있다.     
-개발자는 CIDER 방식을 이용하여 가용할 네트워크의 범위를 지정할 수 있다.                   
-   
+개발자는 CIDR 방식을 이용하여 가용할 네트워크의 범위를 지정할 수 있다.                   
+      
 ## 서브넷 
    
 ![image](https://user-images.githubusercontent.com/50267433/147636205-5afaa1f9-289a-49b8-8646-3f5e5a150609.png)
