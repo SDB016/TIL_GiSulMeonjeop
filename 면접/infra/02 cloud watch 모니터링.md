@@ -1,7 +1,6 @@
 # 로깅  
-      
-**주의점**     
-Avoid side effects    
+         
+**주의점 : Avoid side effects**       
        
 logging으로 인해 애플리케이션 기능의 동작에 영향을 미치지 않아야 합니다.  
 예를 들어 logging하는 시점에 NullPointerException이 발생해 프로그램이 정상적으로 동작하지 않는 상황이 발생하면 안됩니다.   
