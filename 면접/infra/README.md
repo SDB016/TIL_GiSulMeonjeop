@@ -6,7 +6,7 @@
 ## AWS Private, Public subnet - VPC 설정 (NAT)
   
 VPC내에는 보통 Public Subnet과 Private Subnet으로 구성되어 있다.     
-  
+   
 * Public Subnet:     
     * Internet Gateway     
     * ELB   
