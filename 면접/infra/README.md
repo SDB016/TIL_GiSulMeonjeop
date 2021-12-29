@@ -62,6 +62,12 @@ Bastion 이란, 성 외곽을 보호하기 위해 돌출된 부분으로 적으�
 
 라우터 : 스위치와 마찬가지로 자신에게 연결된 노드들의 MAC 주소 정보들을 보관하고 있는 MAC Table 을 가지고 있다. MAC Table 에 정보가 있을때 Forwarding 이 발생하고 MAC Table 에 정보가 없으면 스위치와 다르게 Drop 이 발생한다. Broadcast Domain 구분이 가능.
 
+# AWS VPC  
+   
+* 서브넷 : VPC에 설정한 네트워크 대역을 더 세부적으로 나눈 네트워크   
+* 라우팅테이블 : 네트워크 트래픽을 전달할 위치를 결정하는 데 사용하는 라우팅이라는 이름의 규칙 집합    
+* 인터넷 게이트웨이 : VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이   
+
 ## AWS Private, Public subnet - VPC 설정 (NAT)
   
 VPC내에는 보통 Public Subnet과 Private Subnet으로 구성되어 있다.     
