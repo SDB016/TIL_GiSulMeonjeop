@@ -1,10 +1,16 @@
 # VPC 
+## 망분리 이유  
+
+
+
 ## AWS Private, Public subnet - VPC 설정 (NAT)
   
 VPC내에는 보통 Public Subnet과 Private Subnet으로 구성되어 있다.     
-
-* Public Subnet: 
-    Internet Gateway, ELB, 그리고 Public IP/Elastic IP를 가진 인스턴스를 내부에 가지고 있습니다. 
+  
+* Public Subnet:     
+    * Internet Gateway     
+    * ELB   
+    * Public IP/Elastic IP를 가진 인스턴스를 내부에 가지고 있다.    
 
 * Private Subnet:    
     * 기본적으로 외부와 차단되어 있습니다. 
