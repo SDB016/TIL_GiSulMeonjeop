@@ -183,7 +183,7 @@ SpringAOP는 프록시로 이루어져있기에, final 이랑 상속관련 문�
 * 필터는 디스패처서블릿 앞에서 처리되며 주로 인증처리에 사용된다.   
 * 인터셉터는 디스패처서블릿과 핸들러 사이에 위치하여 주로 인가처리에 사용된다.     
 
-## ApplicationContextAware
+## ApplicationContextAware 인터페이스 
 
 ```java
 public class SimpleClass implements ApplicationContextAware{
@@ -209,6 +209,4 @@ ApplicationContextAware.setApplicationContext()를 호출해준다.
 쉽게 말해 bean을 관리하는 ApplicationContext 인스턴스에 직접 접근이 필요한 경우 사용하는 Interface이다.     
 많이 사용되지는 않고 ApplicationContext세부 설정을 XML파일 로딩시점에 특정 bean에 위임하는 경우에 사용   
 
-
-
-출처: https://javaslave.tistory.com/50 [전산쟁이 블로그]
+## BeanNameAware
