@@ -29,10 +29,13 @@ public network를 통해서 private network들이 인터넷을 사용하게끔 �
 
 ![image](https://user-images.githubusercontent.com/50267433/147628128-54555475-ed4d-4ee5-b0dd-95d8a761acf2.png)    
    
-   
+**서로 다른 네트워크간의 통신을 중계**     
+* MAC 테이블에 정보가 있을 때 : Forwarding    
+* MAC 테이블에 정보가 없을 때 : Drop   
+* 라우팅 프로토콜을 활용하여     
+      
+어떤 대역으로 패킷을 보내는 것이 최적 경로인지 학습    
 
-
-   
 ## CI/CD Blue, Green 아세요?
 
 
