@@ -183,7 +183,8 @@ SpringAOP는 프록시로 이루어져있기에, final 이랑 상속관련 문�
 * 필터는 디스패처서블릿 앞에서 처리되며 주로 인증처리에 사용된다.   
 * 인터셉터는 디스패처서블릿과 핸들러 사이에 위치하여 주로 인가처리에 사용된다.     
 
-## BeanNameAware
+## Aware 인터페이스들 
+### BeanNameAware
 
 ```java
 public class MyBeanName implements BeanNameAware {
@@ -197,7 +198,7 @@ public class MyBeanName implements BeanNameAware {
 
 등록된 빈의 이름을 매개변수로 받아온다.      
   
-## BeanFactoryAware  
+### BeanFactoryAware  
   
 ```java
 public class MyBeanFactory implements BeanFactoryAware {
@@ -214,7 +215,7 @@ BeanFactory를 매개 변수로 받아올 수 있다.
 bean은 자신의 인스턴스를 생성관리하는 BeanFactory가 어떤 인스턴스인지 확인하고 접근할 수 있다.                  
 이를 이용해서 커스텀 BeanFactory를 만들 수도 있을 것 같다.     
 
-## ApplicationContextAware  
+### ApplicationContextAware  
 
 ```java
 public class MyAppkicationContext implements ApplicationContextAware {   
@@ -228,4 +229,32 @@ public class MyAppkicationContext implements ApplicationContextAware {
 ApplicationContext를 매개 변수로 받아올 수 있다.            
 bean은 자신의 인스턴스를 생성관리하는 ApplicationContext가 어떤 인스턴스인지 확인하고 접근할 수 있다.                  
 이를 이용해서 커스텀 ApplicationContext를 만들 수도 있을 것 같다.           
-       
+
+## AOP     
+### AOP란? 
+      
+관점지향 프로그래밍,           
+핵심 기능과 부가 기능이라는 관점에서 코드를 분리..?       
+     
+핵심 기능과 부가 기능 로직이 함께 있을 경우, 코드의 가독성이 떨어지고 중복이 발생하고 관리하기가 어려움          
+핵심 기능과 부가 기능 로직을 분리하여, 개발자는 핵심 기능에만 초점을 맞추어 개발할 수 있게끔해주고       
+부가 기능의 중복을 제거하고 한번에 관리하게 해줌    
+   
+즉, AOP는 OOP와 대치대는 개념이 아니라, OOP를 보조하기 위한 프로그래밍 기법  
+
+### AOP 용어
+    
+* Aspect : PointCut + Advice 모듈(여러개 존재 가능)   
+* Advisor : 하나의 PointCut + Advice (스프링에서만 사용하는 용어)    
+* JoinPoint : AOP가 적용될 수 있는 위치(클래스, 필드, 메서드 등등), 스프링 AOP는 런타임(프록시)위빙이여서 메서드만 가능     
+* Pointcut : JoinPoint 중에서도 실제 AOP를 적용할 대상을 정하는 것, 위와 같은 이유로 스프링은 메서드만 가능    
+* Advice : 실제 AOP 적용시 적용될 부가 기능        
+* weaving : 포인트 컷에서 advice를 적용하는 법       
+     * 컴파일 : AspectJ 컴파일러를 이용해서 컴파일 시점에 부가기능 추가    
+     * 클래스 로드 : JVM 클래스 로드시점에 AspectJ 클래스로더 조작기를 통해서 바이트 코드 조작하여 부가기능 추가        
+     * 런타임 : 런타임에 부가기능 적용된 프록시 객체를 만들어서 프록시 객체 메서드 호출하면서 동작      
+
+### AOP 프록시     
+
+JDK Dynamic Proxy 랑 CGLIB 있음  
+
