@@ -195,7 +195,24 @@ public class MyBeanName implements BeanNameAware {
 }
 ```
 
-등록된 빈의 이름을 매개변수로 받아온다.     
+등록된 빈의 이름을 매개변수로 받아온다.      
+  
+## BeanFactoryAware  
+  
+```java
+public class MyBeanFactory implements BeanFactoryAware {
+
+    private BeanFactory beanFactory;
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+}
+```
+BeanFactory를 매개 변수로 받아올 수 있다.            
+bean은 자신의 인스턴스를 생성관리하는 BeanFactory가 어떤 인스턴스인지 확인하고 접근할 수 있다.                  
+이를 이용해서 커스텀 BeanFactory를 만들 수도 있을 것 같다.     
 
 ## ApplicationContextAware 인터페이스 
 
@@ -212,19 +229,3 @@ ApplicationContext를 매개 변수로 받아올 수 있다.
 bean은 자신의 인스턴스를 생성관리하는 ApplicationContext가 어떤 인스턴스인지 확인하고 접근할 수 있다.                  
 이를 이용해서 커스텀 ApplicationContext를 만들 수도 있을 것 같다.           
        
-## BeanFactoryAware  
-  
-```java
-public class MyBeanFactory implements BeanFactoryAware {
-
-    private BeanFactory beanFactory;
-
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
-    }
-}
-```
-BeanFactory를 매개 변수로 받아올 수 있다.            
-bean은 자신의 인스턴스를 생성관리하는 BeanFactory가 어떤 인스턴스인지 확인하고 접근할 수 있다.                  
-이를 이용해서 커스텀 BeanFactory를 만들 수도 있을 것 같다.        
