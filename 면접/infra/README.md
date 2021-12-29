@@ -22,15 +22,15 @@
 * 링크 : 물리적 회선         
      
 즉, 하나의 Subnet을 하나의 망이라고 칭할 수 있겠네요        
-      
-* Region : 국가 / 지역       
-* Availability Zone : 데이터센터       
-    * ap-northeast-2a      
-    * ap-northeast-2b       
-* VPC          
-    * 하나의 Region에 종속       
-    * 다수의 AZ 설정 가능          
-    * VPC IP 대역 내에서 망 구성         
+        
+* Region : 국가 / 지역         
+* Availability Zone : 데이터센터         
+    * ap-northeast-2a          
+    * ap-northeast-2b        
+* VPC            
+    * 하나의 Region에 종속        
+    * 다수의 AZ 설정 가능            
+    * VPC IP 대역 내에서 망 구성           
 
 ## AWS Private, Public subnet - VPC 설정 (NAT)
   
