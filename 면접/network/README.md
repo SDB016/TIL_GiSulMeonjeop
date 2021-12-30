@@ -72,13 +72,22 @@
     * keep-alive 로 인한 커넥션 유지           
     * Pipelining 을 이용한 다수의 요청 한번에 수거 및 처리              
     * 그러나 요청 순서에 따른 응답 제공을 위한 **HOL블로킹 발생**        
-    * Multiple Connection을 통해 HOL 블록킹을 해결할 수는 있지만 리소스가 제한적이라는 문제 발생      
+    * Multiple Connection을 통해 HOL 블록킹을 해결할 수는 있지만 리소스(대역폭)가 제한적이라는 문제 발생      
 3. http 2.0 :  
-    * 데이터 전송에 양방향 Stream을 사용하기 시작     
-    * HTTP Message 대신, Frame을 이용하여 데이터 전송   
-    * 각 요청에 따른 응답 Frame이 먼저 도착하고 조립된대로 
-
-멀티 플렉싱을 이용해서 처리된 대로 응답해주는 구조  
+    * 하나의 TCP 연결에서 여러 요청에 비동기 방식을호 처리하는 Multiplexing 적용       
+        * 하나의 TCP 연결에서 데이터 전송 양방향 Stream을 사용하는 방식으로 채택           
+        * Stream 내부에서는 Frame 단위로 데이터가 전송되고, 각각의 Frame들은 Stream 식별자를 갖고 있다.                
+        * 동일한 Stream 식별자의 응답 Frame 이 뭉쳐져서 응답 메시지를 완성시키는 방식으로 순서에 상관없는 데이터 전송을 보장한다.    
+        * 이를 통해 HOL 블록킹 해결     
+    * 헤더 압축
+        * HPACK 압축방식 사용(헤더 인덱싱) + 인코딩 
+        * Static Table은 HTTP/2 Spec에 정의된 Table로 HTTP/2 Header로 자주 사용되는 Key-value 값 쌍을 저장하고 있는 Table 
+        * Dynamic Table은 한번 전송/수신한 Header의 Key-value 값을 임의로 저장하는 Buffer 역할을 수행하는 Table이다.  
+        * 이전에 사용되었던 헤더는 테이블에 알맞는 인덱스 값만 넣어준다.    
+        * 이전에 사용되었던 헤더가 아닌 새로 들어온 헤더에 대해서 Huffman 인코딩을 진행한다.(이후 테이블에 등록될 것)     
+        * 헤더의 크기를 줄여 페이지 로드 시간 감축하는 효과를 가져온다.   
+    * 서버 푸시 
+        * 클라이언트가 HTML 요청시 관련된 CSS, JS 정적 파일들도 보내주는 기법  
 
 ## GET VS POST   
 
