@@ -38,9 +38,10 @@ Http 1.0 같은 경우 매 요청시 새로 커넥션을 생성하기에 **매�
 # HTTP 1.1
      
 ![2638A3415828845026](https://user-images.githubusercontent.com/50267433/138406967-4371f9ab-0b06-483f-b79f-4aac5f3f2b27.png)   
-       
-HTTP 1.1에는 **keep-alive**라는 지속 커넥션을 이용하여 TCP Connection 비용을 대폭 줄였다.      
-               
+             
+HTTP 1.1에는 **keep-alive**라는 지속 커넥션을 이용하여 TCP Connection 비용을 대폭 줄였다.         
+또한, 여러 요청을 입력받고 응답을 보내주는 **Pipelining**을 도입했다.       
+                 
 ## keep-alive    
 1. timeout 시간이 지나면 확인 패킷을 보낸다.      
     1. 응답을 받으면 다시 카운트 한다.            
@@ -51,15 +52,16 @@ HTTP 1.1에는 **keep-alive**라는 지속 커넥션을 이용하여 TCP Connect
     * 즉, 웹 애플리케이션에서 설정된 기간까지 최대한 연결을 유지하려고 한다.      
                    
 ## Pipelining 과 HOL 블록킹 문제  
-           
+             
 요청이 오면 응답을 넘겨주기까지 시간이 오래 걸린다.              
 이로 인해, 다음 요청을 보내기까지 시간이 오래 걸린다는 몬제가 있었다.       
 이를 해결하기 위해 **서버 쪽에서 Queue를 사용하여 처리하자는 생각에 Pipelining**이 도입되었다.             
    
 ![pipelining](https://user-images.githubusercontent.com/50267433/138417589-8e0ae007-74c4-4941-ab6b-391d53735381.jpg)
+         
+파이프라이닝은 한번에 여러 Request를 보내고 한번에 여러 response를 반환하는 것을 말한다.          
+하지만, 여전히 **처음 요청이 처음 응답으로 반환해야하듯이 요청/응답에 순서를 보장해야한다는 문제가 있었다.**           
    
-파이프라이닝은 한번에 여러 Reqeust를 한번에 보내고 한번에 여러 response를 받는 것을 말한다.       
-하지만, 여전히 처음 요청이 처음 응답으로 와야 되듯이 요청/응답에 순서를 보장해야한다는 문제가 있었다.     
 만약, 처음 요청에 대해서 서버가 처리하지 못한다면?       
 나머지는 요청들에 대해서 blocking이 이루어지는 **HOL 블록킹(head of line blocking) 발생**           
       
