@@ -79,19 +79,33 @@ HOL(head of line) blocking 을 해결하기 위해서 **Multiple Connections이 
 즉, 많은 데이터를 한번에 보내니까 부하를 발생시킬 수 있는 것이고 이로 인해 Latency가 증가될 수 있다.          
    
 # HTTP 2.0  
+
+<img width="1146" alt="785a0139c41f4674a4a3283e1a621fbc" src="https://user-images.githubusercontent.com/50267433/147742440-8c5b0c9b-d102-4629-8ea2-54ee167ff5ea.png">
+
+기존 HTTP는 메시지단위로 이루어져있다.   
+   
+* STATUS LINE(START LINE)   
+* HEADER 
+* BODY 
+
+반면, HTTP2.0 같은 경우는 frame으로 나누며 여러 message가 모여 stream이 된다.   
+  
+* HEADER FRAME     
+* DATA FRAME     
+     
+더불어, 일반 텍스트 형식인 HTTP/1.x 프로토콜과 달리,          
+HTTP/2 통신은 더 작은 메시지와 프레임으로 분할되며 **각각은 바이너리 형식으로 인코딩된다.**         
+이로인해, 파싱/전송속도가 향상되었으며 오류 발생률 또한 낮아졌다.        
   
 ![슬라이드1](https://user-images.githubusercontent.com/50267433/138418948-144409d4-6eb0-4e31-8660-e904fda12806.PNG)
-
-* Steam은 여러 message들로 구성 되어있다.
-* message는 header/data등의 frame으로 구성 되어있다.
+       
+HTTP2 에서는 Stream 이라는 데이터 양방향 흐름을 이용한다.        
+Stream의 유연한 구조 덕분에 응답 frame 들이 요청 순서에 상관없이 만들어진 순서대로 클라이언트에게 전달되어요.    
+즉, 하나의 TCP 연결을 통해 다수의 클라이언트 요청과 서버 응답이 비동기 방식으로 이루어지는 멀티플렉싱이 사용됩니다.  
 * stream에는 식별자를 붙인다.
-* 요청 응답 순서에 상관없이 전달 받더라도 서버 응답이 비동기 방식으로 처리된다
   
-쉽게 설명하자면, HttpMessage에 존재하는 header 와 body를 header frame 과 data frame이라는 형태로 래핑을 한다.   
-그리고 헤더/데이터 프레임을 메시지라 부르고 이 여러 메시지들이 스트림으로 구성되어 있다.       
-
 ![image (2)](https://user-images.githubusercontent.com/50267433/138419294-2cfec1b6-f8c8-4f40-b9ed-75f5ecb130e5.png)
-    
+
 각각의 스트림들은 식별자를 가지고 있으므로 병렬 생성하여 사용할 수 있다.      
 즉, 식별자로 각각의 스트림 찾아서 로직 결과를 담으면 되니까 응답 순서에 상관이 없다.           
 이는 곧, 하나의 TCP 연결을 통해 다수의 클라이언트 요청 처리가 가능해졌다는 것을 의미한다.     
