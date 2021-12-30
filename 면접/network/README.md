@@ -121,11 +121,14 @@ REAT 아키텍처를 모두 지킨 API를 원래는 REST API라 하는데 요즘
 
 ## DNS 흐름 
 
-1. 웹 URL에 링크를 치면, DNS에서 해당 URL을 IP포트로 찾아준다.   
-2. 해당 IP포트를 이용하여 HTTP Message를 보낸다.  
-3. 전송 프로토콜일 경우, 전송하기 전에 TCP 3 Way Handshake를 한다.  
-4. 연결이 완료되면 데이터 전송을 시작한다.   
-5. 
+1. 웹 브라우저는 URL에서 호스트명을 추출한다.    
+2. 추출한 서버의 호스트명을 IP로 변환한다.(DNS를 이용한다)     
+3. IP값과 URL의 포트 번호를 기준으로 서버와 통신을 위한 HTTP Request Message를 만든다.     
+4. 전송 프로토콜을 확인하여 TCP의 경우 3 Way Handshake를 진행한다.  
+5. 브라우저는 서버에게 HTTP Request Message를 전송한다.  
+6. 서버는 메시지를 해독하고 로직을 수행한 후 Http Response Message를 응답한다.   
+7. 브라우저는 데이터를 수신하고 그에따른 로직을 처리한다.   
+8. 만약 더 이상의 작업이 없고 TCP 커넥션이 맺어져있다면 TCP 4 Way HandShake를 진행한다.    
 
 ## CORS란?   
 > Cross-Origin Resource Sharing 
