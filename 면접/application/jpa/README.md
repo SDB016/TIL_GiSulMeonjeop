@@ -31,8 +31,9 @@ JPA는 자바 ORM 기술에 대한 API 표준 명세이다.
 
 ## JPA VS MyBatis  
 
-* JPA는 ORM이고 MyBatis는 SQL Mapper다.   
-* 쿼리매퍼로서 SQL문을 개발자가 직접 작성하여 RDB에 접근하고 반환된 데이터를 객체화 시켜준다.
+* JPA는 ORM이고 MyBatis는 SQL Mapper다.    
+* 쿼리매퍼로서 SQL문을 개발자가 직접 작성하여 RDB에 접근하고 반환된 데이터를 객체화 시켜준다.  
+* ORM은 객체를 분석해서 SQL문을 만드는 작업을 진행해주기 때문에, 개발자느 비즈니스 로직에만 초점을 맞추어 개발하도록 유도   
 
 ## DataSource  
    
