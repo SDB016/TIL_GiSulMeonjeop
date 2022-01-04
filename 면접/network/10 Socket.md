@@ -194,13 +194,104 @@ ws와 wss라는 웹소켓의 독자적인 프로토콜을 이용해서 살사건
 **웹의 실시간 양방향 통신을 위해 등장한 기술이라고 생각하면 된다.**      
 HTML5를 기반으로 나왔으며, 이전 버전과의 호환을 위해 `socket.io`와 같은 라이브러리를 지원한다.     
 
+**정리하자면**   
+* 최초 연결시 Http/Https를 통해서 핸드쉐이킹한다.   
+* 웹소켓 별도 포트는 없으며, 기존 http(80)/https(443)의 포트를 사용한다.  
+* 프레임으로 구성된 메시지라는 논리적 단위로 송수신한다.   
+* 메시지에 포함될 수 있는 교환 가능한 메시지는 텍스트와 바이너리 타입이다.     
+
 ## Web Socket HandShake 및 실행 흐름 
+      
+최초 연결은 HTTP와 HTTPS 를 이용한 WebSocket HandShake 과정을 통해 이루어진다.         
+주의할 사항으로 반드시 GET 메서드를 활용하며 HTTP 버전은 1.1 이상이어야한다.      
 
+![unnamed](https://user-images.githubusercontent.com/50267433/148031319-7c7a4702-ae91-47a7-befe-2006e7087ec8.jpeg)
+  
+**WebSocket HandShake**     
+1. 클라이언트는 서버에게 HTTP/HTTPS를 이용해 연결 요청을 보낸다.   
+    * ```http
+      GET /chat HTTP/1.1
+      Host: example.com:8000
+      Upgrade: websocket
+      Connection: Upgrade
+      Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+      Sec-WebSocket-Protocol: chat, superchat 
+      Sec-WebSocket-Version: 13
+      ```
+    * Upgrade 헤더 : 클라이언트와 서버 전송 프로토콜 연결에서 다른 프로토콜로 업그레이드 위한 헤더  
+    * Conncetion 헤더 : Upgrade 헤더가 명시되어있으면 이를 적용하기 위해 반드시 지정해야할 헤더 
+    * Sec-WebSocket-Key 헤더 : 클라이언트와 서버간의 신원 인증을 위한 헤더(16바이트 난수 값을 base64로 인코딩)
+    * Sec-WebSocket-Protocol 헤더 : 
+        * 클라이언트가 요청하는 여러 서브프로토콜을 의미한다. 
+        * 공백 문자로 구분되며 순서에 따라 우선권이 부여된다.  
+        * 서버에서 여러 프로토콜 혹은 프로토콜 버전을 나눠서 서비스할 경우 필요한 헤더다.
+        * stomp 도 이러한 서브 프로토콜이다.   
+    * Sec-WebSocket-Version 헤더 : 버전 정보 
+2. 서버는 클라이언트의 요청을 받고 응답을 해준다.     
+    * ```http
+      HTTP/1.1 101 Switching Protocols
+      Upgrade: websocket
+      Connection: Upgrade
+      Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+      ```
+    * 101 응답을 통해 프로토콜이 바뀌었음을 알린다.  
+    * Upgrade 헤더 : 클라이언트와 서버 전송 프로토콜 연결에서 다른 프로토콜로 업그레이드 위한 헤더 
+    * Conncetion 헤더 : Upgrade 헤더가 명시되어있으면 이를 적용하기 위해 반드시 지정해야할 헤더 
+    * Sec-WebSocket-Accept 헤더 : 
+        * Sec-WebSocket-Key 헤더를 계산하여 만든 값
+        * 클라이언트와 서버간의 신원 인증을 위한 헤더(base64로 인코딩)    
+        * 이후, 클라이언트가 보낸 Sec-WebSocket-Key가 일치하지 않으면 연결하지 않는다.   
+3. ws 또는 wss 프로토콜을 이용해 데이터를 주고받는다.  
+    * 메시지 단위를 통해 데이터를 주고받는다.   
+    * 메시지 : 여러 프레임들이 모여서 구성된 하나의 논리적인 메시지 단위  
+    * 프레임 : 커뮤니케이션에서 가장 작은 단위(작은 헤더 + Payload로 구성)     
+    * 웹소켓에서 사용되는 데이터 : UTF8 인코딩(0x00, 0xff 등등)
+        * END 비트 : 해당 프레임이 메시지의 끝인지 알려주는 비트 
+        * Opcode 비트 : 해당 프레임이 어떻게 사용될지 부연 설명 
+            * Continue(0x0): 전체 메시지의 일부임을 말해줌(END와 연관) 
+            * Text(0x1): 포함된 데이터가 UTF-8 텍스트라는 의미 
+            * Binary(0x2): 포함된 데이터가 이진 데이터라는 의미       
+            * Close(0x8): 클로즈 핸드쉐이크를 한다는 의미 
+        * length 비트 : 헤딩 프레임에 포함된 데이터의 총 길이를 나타내는 단위 
+4. 더 이상 보낼 데이터가 없다면 close 프레임을 통해 연결을 종료한다.  
 
+## WebSocket 한계 
 
+### Socket.io 및 SocketJS
+웹 소켓은 HTML5를 기반으로 등장한 기술이다.      
+그렇기 때문에 이전 버전과의 호환이 문제가 될 수 있다.  
+  
+**Socket.io 및 SocketJS**    
+* HTML5 이전에 구현된 서비스에서 웹소켓처럼 사용할 수 있도록 지원해주는 라이브러리이다.  
+* 즉, 브라우저와 웹 서버의 종류와 버전을 파악하여 가장 적합한 기술을 선택하도록 해준다.  
+        
+### STOMP - SubSocket 
+WebSocket은 문자열들을 주고 받을 수 있게 해주는 역할만 수행한다.          
+즉, 주고 받은 문자열의 해독은 오롯이 애플리케이션에 맡긴다.      
+HTTP는 형식을 지정해두었기에 모두가 약속을 따르기만하면 해석이 가능하다.       
+하지만 WebSocket은 형식이 정해져있지 않아서 애플리케이션에서 해석이 힘들다.    
+때문에 WebSocket은 SubSocket을 사용해서 주고받는 메시지의 형태를 약속한다.  
 
+**STOMP**  
+* STOMP는 채팅 통신을 하기 위한 형식을 정의한다.    
+* HTTP와 유사하게 간단히 정의되어 해석하기 편한 프로토콜이다.    
+* 일반적으로 웹 소켓 위에서 사용된다.  
 
-## STOMP - SubSocket 
+**STOMP 프레임 구조**  
+* ```
+  COMMAND
+  header1:value1
+  header1:value1
+  
+  bodybodybodybody^@
+  ``` 
+* 프레임 기반의 프로토콜이다.(명령, 헤더, 바디로 구성)  
+* 자주 사용되는 명령은 아래와 같다.  
+    * CONNECT
+    * SEND
+    * SUBSCRIBE
+    * DISCONNECT
+* 헤더와 바디는 빈 라인으로 구분하며, 바디의 끝 부분은 NULL문자로 설정한다.  
 
 # Socket 이전 실시간 통신 기술들  
 # 고려해볼만한 것 
