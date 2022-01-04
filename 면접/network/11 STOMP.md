@@ -64,16 +64,13 @@ subscription: sub-1
   
 STOMP 서버는 모든 구독자에게 메세지를 Broadcasting하기 위해 MESSAGE COMMAND를 사용할 수 있다.      
 서버는 내용을 기반(chatRoomId)으로 메세지를 전송할 broker에 전달한다. (topic을 sub로 보아도 될 것 같다.)  
+   
+## PUB/SUB
 
-
-## PUB/SUN
+![다운로드 (1)](https://user-images.githubusercontent.com/50267433/148089892-20431afd-930a-40d0-ae72-42aa15db833d.jpeg)
 
 STOMP는 Publish-Subscribe 매커니즘을 제공한다.    
-즉 Broker를 통해 타 사용자들에게 메세지를 보내거나 서버가 특정 작업을 수행하도록 메세지를 보낼 수 있게 된다.
-
- 
-
-### 
+즉 Broker를 통해 타 사용자들에게 메세지를 보내거나 서버가 특정 작업을 수행하도록 메세지를 보낼 수 있게 된다. 
 만약 Spring에서 지원하는 STOMP를 사용하면 Spring WebSocket 애플리케이션은 STOMP Broker로 동작하게 된다.         
        
 * **채팅방 생성 :** pub / sub 구현을 위한 Topic이 생성됨      
@@ -97,11 +94,4 @@ Frame은 몇 개의 Text Line으로 지정된 구조인데 첫 번째 라인은 
 STOMP 스펙에 정의한 규칙만 잘 지키면 여러 언어 및 플랫폼 간 메세지를 상호 운영할 수 있다.     
 
 
-## STOMP 프레임 구조 
-
-
-
-이런 명령어들은 "destination" 헤더를 요구하는데             
-이것이 어디에 전송할지, 혹은 어디에서 메세지를 구독할 것 인지를 나타낸다.                         
-    
-
+                      
