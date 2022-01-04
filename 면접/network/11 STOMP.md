@@ -6,10 +6,9 @@ STOMP은 메세징 전송을 효율적으로 하기 위해 탄생한 서브 프�
 **즉, 클라이언트와 서버가 전송할 메세지의 `유형`, `형식`, `내용`들을 정의하는 매커니즘이다.**          
                 
 ## 메시지 
-STOMP는 프레임 기반의 프로토콜로써 `명령`, `헤더`, `바디`로 구성되어있다.          
-더불어, **Text 지향 프로토콜이나, `Message Payload`에는 `Text or Binary 데이터`를 포함 할 수 있다.**       
-
-
+STOMP는 HTTP에서 모델링되는 Frame 기반의 프로토콜로써 `명령`, `헤더`, `바디`로 구성되어있다.          
+더불어, **Text 지향 프로토콜로 `Message Payload`에는 `Text or Binary 데이터`를 포함 할 수 있다.**       
+  
 ```console
 COMMAND
 header1:value1
@@ -25,14 +24,46 @@ bodybodybodybody^@
 * DISCONNECT       
            
 **헤더**              
-* 메시지에 헤더 값을 이용한 작업을 처리할 수 있다.             
-   
-**바디**  
+* 메시지에 헤더 값을 이용한 작업을 처리할 수 있다.               
+* **destination : 이 헤더로 메세지를 보내거나(SEND), 구독(SUBSCRIBE)할 수 있다.   
+  
+**바디**   
 * 헤더와 바디는 빈 라인으로 구분한다.      
 * 바디의 끝 부분은 NULL 문자 `^@`로 설정한다.        
 
+### 전송
 
+```console
+SEND
+destination: /pub/chat
+content-type: application/json
 
+{"chatRoomId": 5, "type": "MESSAGE", "writer": "clientB"} ^@
+```
+
+### 구독  
+
+```console
+SUBSCRIBE
+destination: /topic/chat/room/5
+id: sub-1
+
+^@
+```
+
+### 브로드 캐스팅 
+
+```console
+MESSAGE
+destination: /topic/chat/room/5
+message-id: d4c0d7f6-1
+subscription: sub-1
+
+{"chatRoomId": 5, "type": "MESSAGE", "writer": "clientB"} ^@
+```
+  
+STOMP 서버는 모든 구독자에게 메세지를 Broadcasting하기 위해 MESSAGE COMMAND를 사용할 수 있다.      
+서버는 내용을 기반(chatRoomId)으로 메세지를 전송할 broker에 전달한다. (topic을 sub로 보아도 될 것 같다.)  
 
 
 ## PUB/SUN
