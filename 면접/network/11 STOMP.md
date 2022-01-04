@@ -25,7 +25,7 @@ bodybodybodybody^@
            
 **헤더**              
 * 메시지에 헤더 값을 이용한 작업을 처리할 수 있다.               
-* **destination : 이 헤더로 메세지를 보내거나(SEND), 구독(SUBSCRIBE)할 수 있다.   
+* **destination :** 이 헤더로 메세지를 보내거나(SEND), 구독(SUBSCRIBE)할 수 있다.   
   
 **바디**   
 * 헤더와 바디는 빈 라인으로 구분한다.      
