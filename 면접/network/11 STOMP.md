@@ -15,18 +15,16 @@ STOMP 스펙에 정의한 규칙만 잘 지키면 여러 언어 및 플랫폼 �
   
 ## 개념  
   
-STOMP는 **Text 지향 프로토콜이나, `Message Payload`에는 `Text or Binary 데이터`를 포함 할 수 있다.**     
-**`pub/sub`란 메세지를 공급하는 주체와 소비하는 주체를 분리해 제공하는 메세징 방법이다.**    
-     
+STOMP는 **Text 지향 프로토콜이나, `Message Payload`에는 `Text or Binary 데이터`를 포함 할 수 있다.**      
+더불어, STOMP는 Publish-Subscribe 매커니즘을 제공한다.         
+즉, Broker를 통해 타 사용자들에게 메세지를 보내거나 서버가 특정 작업을 수행하도록 메세지를 보낼 수 있게 된다.             
+만약 Spring에서 지원하는 STOMP를 사용하면 Spring WebSocket 애플리케이션은 STOMP Broker로 동작하게 된다.        
+       
 * **채팅방 생성 :** pub / sub 구현을 위한 Topic이 생성됨      
 * **채팅방 입장 :** Topic 구독    
 * **채팅방에서 메세지를 송수신 :** 해당 Topic으로 메세지를 송신(pub), 메세지를 수신(sub)       
-    
-위와 같은 과정을 통해 STOMP는 Publish-Subscribe 매커니즘을 제공한다.    
-즉 Broker를 통해 타 사용자들에게 메세지를 보내거나 서버가 특정 작업을 수행하도록 메세지를 보낼 수 있게 된다.        
-만약 Spring에서 지원하는 STOMP를 사용하면 Spring WebSocket 애플리케이션은 STOMP Broker로 동작하게 된다.    
-
-Spring에서 지원하는 STOMP는 많은 기능을 하는데           
+          
+Spring에서 지원하는 STOMP는 많은 기능을 하는데            
 예를 들어 Simple In-Memory Broker를 이용해 SUBSCRIBE 중인 다른 클라이언트들에게 메세지를 보내준다.            
 Simple In Memory Broker는 클라이언트의 SUBSCRIBE 정보를 자체적으로 메모리에 유지한다.        
 또한  RabbitMQ, ActiveMQ같은 외부 메세징 시스템을 STOMP Broker로 사용할 수 있도록 지원한다.       
