@@ -9,8 +9,17 @@ Socket이란, 두 개의 프로그램이 서로간의 실시간 통신을 지원
 * Server와 Client가 실시간으로 데이터를 주고받는 상황이 필요한 경우에 사용된다.
 * 실시간 동영상 Streaming이나 온라인 게임 등과 같은 경우에 자주 사용된다.
 
-## 소켓 이전 기술들 
+소켓을 구현하는 대표적인 방식 2가지가 있다.    
+  
+1. TCP/IP Socket 통신  
+2. Http Socket 통신  
 
 ## TCP/IP Socket 
+
+
 ## Web Socket 
+
+
+# Socket 이전 실시간 통신 기술들 
+
 
