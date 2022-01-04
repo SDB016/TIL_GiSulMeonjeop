@@ -177,6 +177,8 @@ close()에 의해 닫힌 소켓은 더 이상 유효한 소켓이 아니기 때�
  
 # Web Socket(HttpSocket) 
 
+## STOMP - SubSocket 
+
 # Socket 이전 실시간 통신 기술들 
 # 고려해볼만한 것 
  
